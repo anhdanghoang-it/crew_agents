@@ -3,166 +3,179 @@ create_userstories_task:
     Transform raw client requirements into complete, implementable user stories. 
     The requirements are: {requirements}
     Analyze the requirement, write clear user story format (As/Want/So that), 
-    define 5-8 testable acceptance criteria covering happy paths and edge cases, 
+    define testable acceptance criteria covering happy paths and edge cases, 
     specify UI/UX needs, 
     and ensure the story meets Definition of Ready so developers can estimate and implement without ambiguity.
   expected_output: >
-    Complete user stories document in: {output_file} containing:
+    Complete user stories document containing:
       Story Header: ID, title, user story statement (As/Want/So that), business value, priority
-      Acceptance Criteria: 5-8 Given-When-Then scenarios (3 happy path, 3 edge cases, 2 error cases)
+      Acceptance Criteria: Given-When-Then scenarios
       UI/UX Specs: Wireframes/mockups, design components, accessibility checklist (if applicable)
-      Test Scenarios: Table with input/expected output examples
   agent: product_manager
-  output_file: '{output_file}'
+  output_file: 'output/{time_stamp}/user_stories.md'
 
-analyze_requirements:
+technical_design_task:
   description: >
-    Analyze the user story and extract testable requirements. Break down the user story into specific, 
-    measurable, and actionable requirements that can be validated through testing. Identify acceptance 
-    criteria, functional requirements, non-functional requirements, and any constraints or dependencies.
-    The user stories are provided in conext: create_userstories_task
-  expected_output: >
-    A structured document containing:
-    - List of functional requirements with clear acceptance criteria
-    - Non-functional requirements (performance, security, usability)
-    - Testable scenarios for each requirement
-    - Dependencies and constraints
-    - Priority levels for each requirement
-  agent: requirement_analyst
-  output_file: output/{time_stamp}/requirements_analysis.md
-  context:
-    - create_userstories_task
-
-test_case_designer_task:
-  description: >
-    Using extracted requirements from analyze_requirements, generate comprehensive test cases for {application_url}. 
-    Create both positive and negative scenarios in Gherkin format with examples and test data. 
-    Include preconditions, detailed steps, expected results, and unique test IDs. 
-    Ensure coverage of edge cases, boundary conditions, happy paths, and error scenarios using data tables and scenario outlines where relevant.
-  expected_output: >
-    A single markdown file containing:
-    - Test cases in BDD Gherkin format (Feature, Scenario, Given, When, Then)
-    - Unique test IDs for each scenario
-    - Preconditions, steps, and expected results
-    - Positive and negative test scenarios with valid/invalid data
-    - Example tables for data-driven testing
-    - Traceability mapping to requirements
-  agent: test_case_designer
-  output_file: output/{time_stamp}/testcases.md
-  context:
-    - analyze_requirements
-
-design_task:
-  description: >
-    Create a comprehensive technical design document for a self-contained Python module
-    based on inputs from multiple upstream tasks.
+    Create a comprehensive technical design document that bridges Python backend and Gradio frontend development.
     
     INPUT SOURCES:
-    - User Stories: from create_userstories_task (Product Manager)
-    - Requirements Analysis: from analyze_requirements (Requirement Analyst)
-    - Test Cases: from test_case_designer_task (Test Case Designer)
+    - User Stories: from create_userstories_task (Product Manager) - includes UI/UX requirements and user-facing messages
     - Original Requirements: {requirements}
     
-    DESIGN REQUIREMENTS:
-    - Design a single, self-contained Python module named '{module_name}'
-    - Primary class must be named '{class_name}'
-    - Include all necessary classes, functions, and data structures
-    - Provide complete method signatures with type hints
-    - Describe functionality, parameters, returns, and exceptions for each component
-    - Ensure the module can be immediately tested and integrated with a UI/CLI
+    BACKEND DESIGN REQUIREMENTS (Python):
+    - Design a self-contained Python module named '{module_name}' with primary class '{class_name}'
+    - Specify all public methods with complete signatures, type hints, parameters, return types, and docstrings
+    - Define data structures, schemas, and domain models
+    - Document error handling strategies with specific exception types and error messages
+    - Ensure backend returns structured responses (success/error messages, data) suitable for UI display
+    - Make the module immediately testable and production-ready
+    
+    FRONTEND DESIGN REQUIREMENTS (Gradio):
+    - Map each backend method to appropriate Gradio UI components (Textbox, Number, Dropdown, Button, etc.)
+    - Specify exact user-facing messages (success, error, info, warnings) for all operations
+    - Define UI layout, component organization, and user workflow through the Gradio interface
+    - Document how backend responses are displayed in the UI (formatted text, tables, alerts)
+    - Include input validation requirements and error handling in the UI layer
+    
+    INTEGRATION REQUIREMENTS:
+    - Clearly document how Gradio frontend calls Python backend methods
+    - Define data flow: user input → UI validation → backend processing → response formatting → UI display
+    - Ensure all user-facing messages defined in user stories are mapped to specific UI elements
+    - Enable QA to validate both backend logic and frontend user experience
     
     OUTPUT FORMAT:
     Produce a detailed markdown document with the following sections:
-    1. Overview & Architecture
-    2. Module Structure
-    3. Class Definitions (with all methods and properties)
-    4. Function Definitions (module-level utilities)
-    5. Data Models/Schemas
-    6. Error Handling Strategy
-    7. Usage Examples
-    8. Testing Recommendations
-    9. Integration Guidelines
+    1. Overview & Architecture (Backend + Frontend integration)
+    2. Python Backend Design
+       - Module Structure
+       - Class Definitions (with all methods and properties)
+       - Data Models/Schemas
+       - Error Handling Strategy
+       - Backend Response Format
+    3. Gradio Frontend Design
+       - UI Component Mapping (backend method → Gradio component)
+       - User-Facing Messages (success, error, info)
+       - UI Layout & Workflow
+       - Input Validation & Error Display
+    4. Integration Points
+       - Backend-Frontend Communication
+       - Data Flow Diagrams
+       - Message Mapping (user stories → UI elements)
+    5. Implementation Examples
+       - Backend Usage Examples
+       - Frontend Integration Examples
+    6. Testing & QA Guidelines
     
     IMPORTANT: 
     - Output ONLY the design document in markdown format
-    - Be specific and implementation-ready (developers should not need clarification)
+    - Be implementation-ready for both backend (Python) and frontend (Gradio) developers
     - Include docstring templates for all classes and methods
-    - Ensure design aligns with provided test cases
+    - Specify exact Gradio component types and configurations
+    - Map all user-facing messages to specific UI elements
   expected_output: >
     A comprehensive technical design document in markdown format containing:
-    - Complete module structure with '{module_name}' as the module name
-    - Primary class '{class_name}' with full method signatures
+    BACKEND SECTION:
+    - Complete Python module structure with '{module_name}' as the module name
+    - Primary class '{class_name}' with full method signatures and type hints
     - All supporting classes, functions, and data structures
-    - Type hints for all parameters and return values
-    - Detailed descriptions of functionality, inputs, outputs, and error conditions
-    - Code examples demonstrating usage patterns
-    - Clear integration points for testing and UI development
-    - Alignment with user stories, requirements, and test cases
+    - Error handling with specific exception types and messages
+    - Structured response formats for UI consumption
+    
+    FRONTEND SECTION:
+    - Gradio UI component mapping for each backend method
+    - Complete list of user-facing messages (success, error, info, warnings)
+    - UI layout specification with Gradio Blocks/Interface
+    - Input validation and error display strategies
+    
+    INTEGRATION SECTION:
+    - Clear data flow from user input to UI display
+    - Backend method → Gradio component mapping table
+    - User story messages → UI element mapping
+    - QA validation points for end-to-end workflows
   agent: engineering_lead
   context:
     - create_userstories_task
-    - analyze_requirements
-    - test_case_designer_task
-  output_file: output/{time_stamp}/{module_name}_design.md
+  output_file: output/{time_stamp}/technical_design.md
 
-# code_task:
-#   description: >
-#     Write a python module that implements the design described by the engineering lead, in order to achieve all User Stories from Product Manager.
-#     Here are the original requirements: {requirements}
-#     The user stories are provided in conext: create_userstories_task
-#   expected_output: >
-#     A python module that implements the design and achieves all User Stories.
-#     Your entire response must consist ONLY of the requested code. DO NOT include any surrounding text, explanations, code block fences (```), or comments outside the function definition.
-#     IMPORTANT: Output ONLY the raw Python code without any markdown formatting, code block delimiters, or backticks, or ```python
-#     The output should be valid Python code that can be directly saved to a file and executed.
-#   agent: backend_engineer
-#   context:
-#     - create_userstories_task
-#     - design_task
-
-code_task:
+implement_backend_module_task:
   description: >
-    Implement the complete Python module '{module_name}.py' with primary class '{class_name}'
-    based on the Engineering Lead's design.
+    Implement a complete, self-contained Python backend module based on the Engineering Lead's technical design
+    that fulfills all user stories from the Product Manager.
     
-    INPUTS:
-    - Design: from design_task (PRIMARY - follow exactly)
-    - User Stories: from create_userstories_task
-    - Requirements: from analyze_requirements
-    - Test Cases: from test_case_designer_task
-    - Original: {requirements}
+    INPUT SOURCES:
+    - Technical Design: from technical_design_task (Engineering Lead) - PRIMARY specification to follow
+    - User Stories: from create_userstories_task (Product Manager) - acceptance criteria and requirements
     
-    REQUIREMENTS:
-    - Implement ALL classes and methods from design
-    - Include type hints and docstrings
-    - Self-contained, production-ready code
-    - No stubs, TODOs, or placeholders
-    - Proper error handling and validation
+    IMPLEMENTATION REQUIREMENTS:
+    - Module name: {module_name}
+    - Primary class name: {class_name}
+    - Follow the exact Python backend design specifications from the Engineering Lead's technical design document
+    - Implement all classes, methods, and functions as specified in the design
+    - Include proper type hints for all parameters and return values
+    - Add comprehensive docstrings for all classes and methods
+    - Implement robust error handling with specific exception types as defined in the design
+    - Return structured responses (dict with success/error messages, data) suitable for Gradio UI display
+    - Ensure code is immediately testable without external dependencies
+    - Make the module ready for Gradio frontend integration
     
-    ⚠️ OUTPUT FORMAT - CRITICAL:
-    - ONLY raw Python code
-    - NO markdown, backticks, or ```python
-    - NO text before/after code
-    - Start with import, docstring, or class/def
-    - Must be directly saveable as .py file
+    USER STORY FULFILLMENT:
+    - Implement all functionality required by user stories from the Product Manager
+    - Ensure all acceptance criteria from user stories are met
+    - Handle all edge cases and error scenarios defined in user stories
+    - Implement all success and error messages as specified in user stories
+    - Validate inputs according to user story requirements
+    
+    CODE QUALITY STANDARDS:
+    - Follow PEP 8 style guidelines
+    - Use descriptive variable and function names
+    - Include input validation for all user inputs
+    - Handle edge cases and boundary conditions
+    - Write clean, maintainable, and well-documented code
+    - Use constants or configuration instead of hard-coded values
+    
+    CRITICAL OUTPUT REQUIREMENTS:
+    - Output ONLY raw Python code
+    - NO markdown formatting, backticks, or code fences (```)
+    - NO explanatory text before or after the code
+    - NO comments outside the module itself
+    - The response must be valid Python that can be saved directly to a .py file
+    - Start directly with imports or module docstring
   expected_output: >
-    Complete executable Python module with:
-    - Module docstring with usage examples
-    - All imports
+    A complete, production-ready Python module ({module_name}.py) containing:
+    
+    STRUCTURE:
+    - Module-level docstring with overview and usage examples
+    - All necessary imports
     - Primary class '{class_name}' fully implemented
-    - All supporting classes and functions
-    - Type hints and comprehensive docstrings
-    - Complete error handling
-    - No placeholder code
+    - All supporting classes, functions, and data structures
+    - Type hints for all parameters and return values
+    - Comprehensive docstrings for all classes and methods
+    
+    FUNCTIONALITY:
+    - All backend methods as specified in the technical design
+    - Structured response format: dict with 'success' (bool), 'message' (str), 'data' (any)
+    - Complete error handling with specific exception types
+    - Input validation for all parameters
+    - Edge case handling as per user stories
+    
+    QUALITY:
+    - PEP 8 compliant code
+    - Self-contained, no external dependencies beyond standard library (unless specified in design)
+    - Production-ready, immediately testable code
+    - Ready for Gradio UI integration
+    - No placeholder code, TODOs, or stubs
+    
+    FORMAT:
+    - Pure Python code only
+    - No markdown, code fences, or explanatory text
+    - Directly executable as a .py file
   agent: backend_engineer
   context:
     - create_userstories_task
-    - create_userstories_task
-    - analyze_requirements
-    - test_case_designer_task
-    - design_task
+    - technical_design_task
+  output_file: output/{time_stamp}/ega_{module_name}.py
 
-python_write_backend_task:
+write_python_backend_task:
   description: >
     Save the generated python scripts into properly named Python files.
     Ensure the output files are ready for immediate execution without further modification.
@@ -179,57 +192,296 @@ python_write_backend_task:
     IMPORTANT: Code must be executable without modification. All imports and function calls should be valid.
     IMPORTANT: Output must be pure, runnable Python code without markdown formatting, code fences, backticks, or
     explanatory text.
-  agent: python_writer_agent
-  output_file: output/{time_stamp}/{module_name}.py
+  agent: code_writer_agent
   context:
-    - code_task
+    - implement_backend_module_task
+  output_file: output/{time_stamp}/{module_name}.py
 
-# frontend_task:
+# write_backend_module_task:
 #   description: >
-#     Write a gradio UI in a module app.py that demonstrates the given backend class in {module_name}.
-#     The current version of Gradio is 5.49.1. Ensure compatibility.
-#     Assume there is only 1 user, and keep the UI very simple indeed - just a prototype or demo.
-#     Here are the original requirements: {requirements}
-#     The user stories are provided in conext: create_userstories_task
+#     Extract pure, executable Python code from the backend implementation and save it to a properly named file.
+    
+#     INPUT SOURCE:
+#     - Backend Implementation: from implement_backend_module_task (Backend Engineer) - contains the Python backend code
+    
+#     CODE EXTRACTION REQUIREMENTS:
+#     - Strip ALL markdown formatting (```python, ```, etc.)
+#     - Remove ALL explanatory text before or after the code
+#     - Remove extraneous comments that are not part of the code
+#     - Preserve module docstrings, class docstrings, and method docstrings
+#     - Preserve inline comments that are part of code logic
+#     - Ensure proper Python syntax and indentation
+#     - Validate that imports are at the top of the file
+#     - Ensure the code starts with imports or module docstring
+    
+#     FILE REQUIREMENTS:
+#     - File name: {module_name}.py
+#     - UTF-8 encoding
+#     - Directly executable as a Python file
+#     - No syntax errors
+#     - Production-ready code
+    
+#     CRITICAL OUTPUT REQUIREMENTS:
+#     - Output ONLY pure, executable Python code
+#     - NO markdown formatting whatsoever
+#     - NO code fences or backticks
+#     - NO explanatory text outside the code
+#     - NO preambles like "Here's the code:" or "This code does..."
+#     - Start immediately with imports or module docstring
+#     - The file must run without any modifications
 #   expected_output: >
-#     A gradio UI in module app.py that demonstrates the given backend class.
-#     The file should be ready so that it can be run as-is, in the same directory as the backend module, and it should import the backend class from {module_name}.
-#     Your entire response must consist ONLY of the requested code. DO NOT include any surrounding text, explanations, code block fences (```), or comments outside the function definition.
-#     IMPORTANT: Output ONLY the raw Python code without any markdown formatting, code block delimiters, or backticks. 
-#     IMPORTANT: Output ONLY the raw Python code, DO NOT include any surrounding text, explanations, code block fences (```), or comments outside the function definition.
-#     The output file should be valid Python code that can be directly saved to a file and executed.
+#     A production-ready Python file ({module_name}.py) containing:
+    
+#     - Pure Python code extracted from implement_backend_module_task
+#     - All markdown and code fences removed
+#     - All explanatory text stripped
+#     - Module docstrings, class docstrings, and method docstrings preserved
+#     - Proper indentation and syntax
+#     - Directly executable without modifications
+#     - No syntax errors
+#     - Ready for import and use by the frontend
+#   agent: code_writer_agent
+#   context:
+#     - implement_backend_module_task
+#   output_file: output/{time_stamp}/{module_name}.py
+
+# implement_frontend_module_task:
+#   description: >
+#     Implement a complete, user-friendly Gradio frontend interface based on the Engineering Lead's technical design
+#     that integrates seamlessly with the Python backend and fulfills all UI/UX requirements from the Product Manager's user stories.
+    
+#     INPUT SOURCES:
+#     - Technical Design: from technical_design_task (Engineering Lead) - PRIMARY specification for Gradio UI design
+#     - Backend Module: from implement_backend_module_task (Backend Engineer) - Python backend to integrate with
+#     - User Stories: from create_userstories_task (Product Manager) - UI/UX requirements and user-facing messages
+    
+#     IMPLEMENTATION REQUIREMENTS:
+#     - File name: app.py
+#     - Import and instantiate {class_name} from {module_name}
+#     - Follow the exact Gradio frontend design specifications from the Engineering Lead's technical design document
+#     - Map all backend methods to appropriate Gradio UI components as specified in the design
+#     - Implement all user-facing messages (success, error, info, warnings) from user stories
+#     - Create UI layout matching the design specifications
+    
+#     UI/UX IMPLEMENTATION:
+#     - Use appropriate Gradio components for each backend method:
+#       * gr.Textbox for text input
+#       * gr.Number for numeric input  
+#       * gr.Dropdown for selection options
+#       * gr.Button for action triggers
+#       * gr.Dataframe or gr.JSON for structured data display
+#       * gr.Markdown for formatted output and messages
+#     - Implement proper input validation before calling backend methods
+#     - Display backend responses (dict with 'success', 'message', 'data') in user-friendly format
+#     - Show all success and error messages as defined in user stories
+#     - Include clear labels, descriptions, and placeholder examples
+#     - Add demo/example section with pre-filled inputs showing typical usage
+#     - Make the interface self-explanatory for non-technical users
+    
+#     TECHNICAL IMPLEMENTATION:
+#     - Use Gradio Blocks for organized, flexible layout
+#     - Handle backend response structure: {success: bool, message: str, data: any}
+#     - Display error messages gracefully with helpful user feedback
+#     - Include application title, description, and usage instructions
+#     - Use gr.Tabs or gr.Accordion for complex interfaces with multiple features
+#     - Add example values for each input field where appropriate
+#     - Ensure responsive layout and good UX practices
+#     - Include app.launch() with appropriate parameters
+    
+#     CRITICAL OUTPUT REQUIREMENTS:
+#     - Output ONLY raw Python code
+#     - NO markdown formatting, backticks, or code fences (```)
+#     - NO explanatory text before or after the code
+#     - NO comments outside the module itself
+#     - The response must be valid Python that can be saved directly to a .py file
+#     - Start with imports (import gradio as gr, from {module_name} import {class_name})
+#     - End with if __name__ == "__main__": app.launch()
+#   expected_output: >
+#     A complete, production-ready Gradio application file (app.py) containing:
+    
+#     STRUCTURE:
+#     - All necessary imports (gradio, {module_name})
+#     - {class_name} instantiation from {module_name}
+#     - Gradio UI component definitions
+#     - Event handler functions for backend method calls
+#     - Gradio Blocks layout with organized components
+#     - Launch configuration
+    
+#     FUNCTIONALITY:
+#     - All Gradio UI components mapped to backend methods as per design
+#     - Input validation before backend calls
+#     - Backend response handling (success, message, data)
+#     - Display of all user-facing messages from user stories
+#     - Error handling with user-friendly feedback
+#     - Example inputs for demonstration
+    
+#     UI/UX:
+#     - Clean, intuitive Gradio Blocks layout
+#     - Clear labels and descriptions for all components
+#     - Success and error message display
+#     - Responsive design with tabs/accordions as needed
+#     - Self-explanatory interface requiring no documentation
+#     - Professional appearance with title and instructions
+    
+#     QUALITY:
+#     - PEP 8 compliant code
+#     - Production-ready, immediately executable
+#     - No placeholder code, TODOs, or stubs
+#     - Seamless integration with {module_name} backend
+    
+#     FORMAT:
+#     - Pure Python code only
+#     - No markdown, code fences, or explanatory text
+#     - Directly executable as a .py file
 #   agent: frontend_engineer
 #   context:
 #     - create_userstories_task
-#     - code_task
-
-frontend_task:
+#     - technical_design_task
+#     - implement_backend_module_task
+#   output_file: output/{time_stamp}/aga_app.py    
+implement_frontend_module_task:
   description: >
-    Create a Gradio web interface in 'app.py' to demonstrate the backend module.
-    INPUTS:
-    - Backend Code: from code_task
-    - Design Document: from design_task (for understanding functionality)
-    - User Stories: from create_userstories_task (for UI flow)
+    Implement a complete, user-friendly Gradio frontend interface based on the Engineering Lead's technical design
+    that integrates seamlessly with the Python backend and fulfills all UI/UX requirements from the Product Manager's user stories.
     
-    Create a Gradio interface that:
-    - Demonstrates all public methods of {class_name}
-    - Uses appropriate input components for each parameter
-    - Displays outputs in clear, formatted way
-    - Includes example inputs and usage instructions
-    - Handles errors gracefully
+    INPUT SOURCES:
+    - Technical Design: from technical_design_task (Engineering Lead) - PRIMARY specification for Gradio UI design
+    - Backend Module: from implement_backend_module_task (Backend Engineer) - Python backend to integrate with
+    - User Stories: from create_userstories_task (Product Manager) - UI/UX requirements and user-facing messages
     
-    File must be named 'app.py' and import from {module_name}.
-    OUTPUT: Raw Python code only - no markdown or explanations.
+    IMPLEMENTATION REQUIREMENTS:
+    - File name: app.py
+    - Import and instantiate {class_name} from {module_name}
+    - Follow the exact Gradio frontend design specifications from the Engineering Lead's technical design document
+    - Map all backend methods to appropriate Gradio UI components as specified in the design
+    - Implement all user-facing messages (success, error, info, warnings) from user stories
+    - Create UI layout matching the design specifications
+    
+    UI/UX IMPLEMENTATION:
+    - Use appropriate Gradio components for each backend method:
+      * gr.Textbox for text input
+      * gr.Number for numeric input  
+      * gr.Dropdown for selection options
+      * gr.Button for action triggers
+      * gr.Dataframe or gr.JSON for structured data display
+      * gr.Markdown for formatted output and messages
+    - Implement proper input validation before calling backend methods
+    - Show all success and error messages as defined in technical design and user stories
+    - Include clear labels, descriptions, and placeholder examples
+    - Add demo/example section with pre-filled inputs showing typical usage
+    
+    TECHNICAL IMPLEMENTATION:
+    - Use Gradio Blocks for organized, flexible layout
+    - Handle backend response structure: {success: bool, message: str, data: any}
+    - Include application title, description, and usage instructions
+    - Use gr.Tabs or gr.Accordion for complex interfaces with multiple features
+    - Add example values for each input field where appropriate
+    - Ensure responsive layout and good UX practices
+    - Include app.launch() with appropriate parameters
+    
+    CRITICAL OUTPUT REQUIREMENTS:
+    - Output ONLY raw Python code
+    - NO markdown formatting, backticks, or code fences (```)
+    - NO explanatory text before or after the code
+    - NO comments outside the module itself
+    - The response must be valid Python that can be saved directly to a .py file
+    - Start with imports (import gradio as gr, from {module_name} import {class_name})
+    - End with if __name__ == "__main__": app.launch()
   expected_output: >
-    Complete Gradio application file (app.py) that launches a web interface
-    demonstrating all functionality of the {module_name} backend.
+    A complete, production-ready Gradio application file (app.py) containing:
+    
+    STRUCTURE:
+    - All necessary imports (gradio, {module_name})
+    - {class_name} instantiation from {module_name}
+    - Gradio UI component definitions
+    - Event handler functions for backend method calls
+    - Gradio Blocks layout with organized components
+    - Launch configuration
+    
+    FUNCTIONALITY:
+    - All Gradio UI components mapped to backend methods as per design
+    - Input validation before backend calls
+    - Backend response handling (success, message, data)
+    - Display of all user-facing messages from user stories
+    - Error handling with user-friendly feedback
+    - Example inputs for demonstration
+    
+    UI/UX:
+    - Clean, intuitive Gradio Blocks layout
+    - Clear labels and descriptions for all components
+    - Success and error message display
+    - Responsive design with tabs/accordions as needed
+    - Self-explanatory interface requiring no documentation
+    - Professional appearance with title and instructions
+    
+    QUALITY:
+    - PEP 8 compliant code
+    - Production-ready, immediately executable
+    - No placeholder code, TODOs, or stubs
+    - Seamless integration with {module_name} backend
+    
+    FORMAT:
+    - Pure Python code only
+    - No markdown, code fences, or explanatory text
+    - Directly executable as a .py file
   agent: frontend_engineer
   context:
-    - code_task
-    - design_task
     - create_userstories_task
+    - technical_design_task
+    - implement_backend_module_task
+  output_file: output/{time_stamp}/aga_app.py   
 
-python_write_frontend_task:
+# write_frontend_module_task:
+#   description: >
+#     Extract pure, executable Python code from the frontend implementation and save it to a properly named file.
+    
+#     INPUT SOURCE:
+#     - Frontend Implementation: from implement_frontend_module_task (Frontend Engineer) - contains the Gradio UI code
+    
+#     CODE EXTRACTION REQUIREMENTS:
+#     - Strip ALL markdown formatting (```python, ```, etc.)
+#     - Remove ALL explanatory text before or after the code
+#     - Remove extraneous comments that are not part of the code
+#     - Preserve module docstrings and inline comments that are part of code logic
+#     - Ensure proper Python syntax and indentation
+#     - Validate that imports are at the top of the file (import gradio as gr, from {module_name} import {class_name})
+#     - Ensure the code ends with if __name__ == "__main__": app.launch()
+    
+#     FILE REQUIREMENTS:
+#     - File name: app.py
+#     - UTF-8 encoding
+#     - Directly executable as a Python file
+#     - No syntax errors
+#     - Production-ready Gradio application
+    
+#     CRITICAL OUTPUT REQUIREMENTS:
+#     - Output ONLY pure, executable Python code
+#     - NO markdown formatting whatsoever
+#     - NO code fences or backticks
+#     - NO explanatory text outside the code
+#     - NO preambles like "Here's the code:" or "This code does..."
+#     - Start immediately with imports
+#     - End with if __name__ == "__main__": app.launch()
+#     - The file must run without any modifications
+#   expected_output: >
+#     A production-ready Gradio application file (app.py) containing:
+    
+#     - Pure Python code extracted from implement_frontend_module_task
+#     - All markdown and code fences removed
+#     - All explanatory text stripped
+#     - Docstrings and relevant inline comments preserved
+#     - Proper indentation and syntax
+#     - Imports at the top (gradio, {module_name})
+#     - App launch at the bottom
+#     - Directly executable without modifications
+#     - No syntax errors
+#     - Ready to run and integrate with {module_name} backend
+#   agent: code_writer_agent
+#   context:
+#     - implement_frontend_module_task
+#   output_file: output/{time_stamp}/app.py  
+
+write_python_frontend_task:
   description: >
     Save the generated python scripts into properly named Python files.
     Ensure the output files are ready for immediate execution without further modification.
@@ -246,7 +498,7 @@ python_write_frontend_task:
     IMPORTANT: Code must be executable without modification. All imports and function calls should be valid.
     IMPORTANT: Output must be pure, runnable Python code without markdown formatting, code fences, backticks, or
     explanatory text.
-  agent: python_writer_agent
-  output_file: output/{time_stamp}/app.py
+  agent: code_writer_agent
   context:
-    - frontend_task  
+    - implement_frontend_module_task
+  output_file: output/{time_stamp}/app.py  

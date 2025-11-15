@@ -31,24 +31,6 @@ class TddEngineeringTeam:
         )
 
     @agent
-    def requirement_analyst(self) -> Agent:
-        return Agent(
-            config=self.agents_config["requirement_analyst"],  # type: ignore[index]
-            max_execution_time=500,
-            max_retry_limit=3,
-            verbose=True,
-        )
-
-    @agent
-    def test_case_designer(self) -> Agent:
-        return Agent(
-            config=self.agents_config["test_case_designer"],  # type: ignore[index]
-            max_execution_time=500,
-            max_retry_limit=3,
-            verbose=True,
-        )
-
-    @agent
     def engineering_lead(self) -> Agent:
         return Agent(
             config=self.agents_config["engineering_lead"],  # type: ignore[index]
@@ -80,9 +62,9 @@ class TddEngineeringTeam:
         )
 
     @agent
-    def python_writer_agent(self) -> Agent:
+    def code_writer_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config["python_writer_agent"],  # type: ignore[index]
+            config=self.agents_config["code_writer_agent"],  # type: ignore[index]
             allow_code_execution=True,
             code_execution_mode="safe",
             max_execution_time=500,
@@ -97,41 +79,31 @@ class TddEngineeringTeam:
         )
 
     @task
-    def analyze_requirements(self) -> Task:
+    def technical_design_task(self) -> Task:
         return Task(
-            config=self.tasks_config["analyze_requirements"]  # type: ignore[index]
+            config=self.tasks_config["technical_design_task"]  # type: ignore[index]
         )
 
     @task
-    def test_case_designer_task(self) -> Task:
+    def implement_backend_module_task(self) -> Task:
+        return Task(config=self.tasks_config["implement_backend_module_task"])  # type: ignore[index]
+
+    @task
+    def write_python_backend_task(self) -> Task:
         return Task(
-            config=self.tasks_config["test_case_designer_task"]  # type: ignore[index]
+            config=self.tasks_config["write_python_backend_task"]  # type: ignore[index]
         )
 
     @task
-    def design_task(self) -> Task:
-        return Task(config=self.tasks_config["design_task"])  # type: ignore[index]
-
-    @task
-    def code_task(self) -> Task:
-        return Task(config=self.tasks_config["code_task"])  # type: ignore[index]
-
-    @task
-    def python_write_backend_task(self) -> Task:
+    def implement_frontend_module_task(self) -> Task:
         return Task(
-            config=self.tasks_config["python_write_backend_task"]  # type: ignore[index]
+            config=self.tasks_config["implement_frontend_module_task"],
         )
 
     @task
-    def frontend_task(self) -> Task:
+    def write_python_frontend_task(self) -> Task:
         return Task(
-            config=self.tasks_config["frontend_task"],
-        )
-
-    @task
-    def python_write_frontend_task(self) -> Task:
-        return Task(
-            config=self.tasks_config["python_write_frontend_task"]  # type: ignore[index]
+            config=self.tasks_config["write_python_frontend_task"]  # type: ignore[index]
         )
 
     @crew
@@ -144,6 +116,7 @@ class TddEngineeringTeam:
             agents=self.agents,  # Automatically created by the @agent decorator
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
+            memory=True,
             verbose=True,
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )

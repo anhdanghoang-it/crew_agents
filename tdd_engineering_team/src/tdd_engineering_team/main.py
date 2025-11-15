@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import datetime
+import os
 import sys
 import warnings
 import time
@@ -25,6 +26,9 @@ The system should prevent the user from withdrawing funds that would leave them 
  from buying more shares than they can afford, or selling shares that they don't have.
  The system has access to a function get_share_price(symbol) which returns the current price of a share, and includes a test implementation that returns fixed prices for AAPL, TSLA, GOOGL.
 """
+
+# Assume there is only 1 user, and keep the UI very simple indeed - just a prototype or demo. 
+
 
 module_name = "accounts"
 class_name = "Account"
@@ -68,15 +72,15 @@ def run():
 #     except Exception as e:
 #         raise Exception(f"An error occurred while training the crew: {e}")
 
-# def replay():
-#     """
-#     Replay the crew execution from a specific task.
-#     """
-#     try:
-#         TddEngineeringTeam().crew().replay(task_id=sys.argv[1])
+def replay():
+    """
+    Replay the crew execution from a specific task.
+    """
+    try:
+        TddEngineeringTeam().crew().replay(task_id=sys.argv[1])
 
-#     except Exception as e:
-#         raise Exception(f"An error occurred while replaying the crew: {e}")
+    except Exception as e:
+        raise Exception(f"An error occurred while replaying the crew: {e}")
 
 # def test():
 #     """
