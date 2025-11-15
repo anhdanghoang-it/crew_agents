@@ -1,17 +1,134 @@
-research_task:
+take_snapshot_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
-  expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    You will:
 
-reporting_task:
-  description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    1. **Navigate and Explore**
+      - Navigate to the provided URL: {given_url} using the browser tools
+      - Explore the browser snapshot
+      - Do not take screenshots unless absolutely necessary
+      - Use browser_* tools to navigate and discover interface
+      - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
+
+    2. **Create Documentation**
+
+      Save your findings as markdown documentation following this structure:
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    Always save the complete test plan as a markdown file with clear headings and structured sections for each userstory.
+    following this structure:
+    ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
+    ### Epic/userstory: epic/userstory name in the userstories
+    - Page URL: 
+    - Page Title: 
+    - Page Snapshot:
+    ```yaml```
+    <example>
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: http://127.0.0.1:7860/
+      - Page Title: Trading Simulation Platform
+      - Page Snapshot:
+      ```yaml
+      - main [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e7]:
+            - heading "Trading Simulation Platform" [level=1] [ref=e12]
+            - paragraph [ref=e17]: Create an account to start managing your virtual portfolio. Deposit funds, trade stocks, and track your performance.
+            - generic [ref=e18]:
+              - generic [ref=e19]:
+                - generic [ref=e20]:
+                  - button [ref=e21] [cursor=pointer]: Portfolio
+                  - button [ref=e22] [cursor=pointer]: Cash Management
+                  - button [ref=e23] [cursor=pointer]: Trade
+                  - button [ref=e24] [cursor=pointer]: History
+                - tablist [ref=e25]:
+                  - tab "Portfolio" [selected] [ref=e26] [cursor=pointer]
+                  - tab "Cash Management" [ref=e27] [cursor=pointer]
+                  - tab "Trade" [ref=e28] [cursor=pointer]
+                  - tab "History" [ref=e29] [cursor=pointer]
+              - tabpanel [ref=e30]:
+                - generic [ref=e31]:
+                  - generic [ref=e33]:
+                    - generic [ref=e35]:
+                      - generic [ref=e36]: Total Portfolio Value ($)
+                      - textbox "Total Portfolio Value ($)" [disabled] [ref=e38]:
+                        - /placeholder: ""
+                        - text: $10,000.00
+                    - generic [ref=e40]:
+                      - generic [ref=e41]: Total Profit / Loss ($)
+                      - textbox "Total Profit / Loss ($)" [disabled] [ref=e43]:
+                        - /placeholder: ""
+                        - text: $0.00
+                    - generic [ref=e45]:
+                      - generic [ref=e46]: Cash Balance ($)
+                      - textbox "Cash Balance ($)" [disabled] [ref=e48]:
+                        - /placeholder: ""
+                        - text: $10,000.00
+                  - button "Refresh" [ref=e49] [cursor=pointer]
+                  - heading "Current Holdings" [level=3] [ref=e54]
+                  - grid [ref=e57]:
+                    - table [ref=e58]:
+                      - rowgroup [ref=e59]:
+                        - row [ref=e60]:
+                          - cell [ref=e61]:
+                            - button [ref=e64] [cursor=pointer]:
+                              - button [ref=e65]: Symbol
+                          - cell [ref=e66]:
+                            - button [ref=e69] [cursor=pointer]:
+                              - button [ref=e70]: Quantity
+                          - cell [ref=e71]:
+                            - button [ref=e74] [cursor=pointer]:
+                              - button [ref=e75]: Current Price
+                          - cell [ref=e76]:
+                            - button [ref=e79] [cursor=pointer]:
+                              - button [ref=e80]: Total Value
+                    - button "Drop CSV or TSV files here to import data into dataframe" [ref=e81]:
+                      - table [ref=e85]:
+                        - rowgroup [ref=e86]:
+                          - row "Symbol Quantity Current Price Total Value" [ref=e87]:
+                            - cell "Symbol" [ref=e88]:
+                              - button "Symbol" [ref=e91] [cursor=pointer]:
+                                - button "Symbol" [ref=e92]
+                            - cell "Quantity" [ref=e93]:
+                              - button "Quantity" [ref=e96] [cursor=pointer]:
+                                - button "Quantity" [ref=e97]
+                            - cell "Current Price" [ref=e98]:
+                              - button "Current Price" [ref=e101] [cursor=pointer]:
+                                - button "Current Price" [ref=e102]
+                            - cell "Total Value" [ref=e103]:
+                              - button "Total Value" [ref=e106] [cursor=pointer]:
+                                - button "Total Value" [ref=e107]
+                          - iframe [ref=e108]:
+                            
+                        - rowgroup
+                        - rowgroup
+          - generic [ref=e109]:
+            - button "Use via API logo" [ref=e110] [cursor=pointer]:
+              - text: Use via API
+              - img "logo" [ref=e111]
+            - generic [ref=e112]: ·
+            - link "Built with Gradio logo" [ref=e113] [cursor=pointer]:
+              - /url: https://gradio.app
+              - text: Built with Gradio
+              - img "logo" [ref=e114]
+            - generic [ref=e115]: ·
+            - button "Settings Settings" [ref=e116] [cursor=pointer]:
+              - text: Settings
+              - img "Settings" [ref=e117]
+            - iframe [ref=e118]:
+      ```
+    </example>
+  agent: snapshot_agent
+  output_file: output/{time_stamp}/snapshot.md  
