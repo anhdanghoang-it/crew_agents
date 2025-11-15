@@ -26,7 +26,7 @@ test.describe('Stock Trading', () => {
     await expect(page.getByRole('textbox', { name: 'Cash Balance ($)' })).toHaveValue('$8,500.00');
 
     // Verify Current Holdings shows AAPL with 10 shares
-    await expect(page.getByText('AAPL')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'AAPL' })).toBeVisible();
 
     // Verify Total Portfolio Value remains $10,000.00 ($8,500 cash + $1,500 shares)
     await expect(page.getByRole('textbox', { name: 'Total Portfolio Value ($)' })).toHaveValue('$10,000.00');
