@@ -1,3 +1,50 @@
+Thought: The user wants me to generate a complete, executable Playwright test script in TypeScript based on a provided conceptual test plan, using the available UI snapshots for robust locators.
+
+I must follow all critical code generation rules:
+1.  Generate ONLY executable code.
+2.  NO explanations, comments, or descriptions before or after the code.
+3.  NO markdown code blocks (no ```language syntax).
+4.  NO preambles.
+5.  Start immediately with the actual code.
+6.  Use the absolute base URL `http://127.0.0.1:7860/` for all `page.goto()` calls.
+
+I need to implement the following test sequence which requires setup and tear down (simulated by running tests sequentially or using a setup block for state):
+
+**State Management Strategy:** Since the tests are highly dependent on the previous state (e.g., balance after deposit, holdings after buy), I will structure them within a `describe` block and use a sequence of `test.describe.serial` or sequential `test` blocks to maintain the state dependency across the scenarios (User A's state).
+
+**Locators identified from snapshots:**
+
+| Feature | Element | Snapshot Ref | Playwright Locator Strategy |
+| :--- | :--- | :--- | :--- |
+| **Setup/US-001 (Account)** | Username Input | `e26` | `page.getByLabel('Username')` |
+| | Password Input | `e31` | `page.getByLabel('Password')` |
+| | Deposit Amount Input | `e35` | `page.getByRole('spinbutton', { name: 'Initial Deposit Amount ($)' })` |
+| | Create Account Button | `e36` | `page.getByRole('button', { name: 'Create Account' })` |
+| | Status Textbox (Creation) | `e42` | `page.getByLabel('Status')` (requires filtering or context if other status boxes exist, but since it's the only one on the initial page, `page.getByLabel('Status')` might suffice. Let's use context if possible.) |
+| | Tab: Portfolio | `e61` | `page.getByRole('tab', { name: 'Portfolio' })` |
+| | Tab: Cash Management | `e62` | `page.getByRole('tab', { name: 'Cash Management' })` |
+| | Tab: Trade | `e63` | `page.getByRole('tab', { name: 'Trade' })` |
+| | Tab: History | `e64` | `page.getByRole('tab', { name: 'History' })` |
+| **US-002 (Cash Mgmt)** | Current Cash Balance Textbox | `e151` | `page.getByLabel('Current Cash Balance')` |
+| | Amount ($) Spinbutton | `e158` | `page.getByRole('spinbutton', { name: 'Amount ($)' })` |
+| | Deposit Button | `e160` | `page.getByRole('button', { name: 'Deposit' })` |
+| | Withdraw Button | `e161` | `page.getByRole('button', { name: 'Withdraw' })` |
+| | Status Textbox (Cash Mgmt) | `e167` | `page.getByLabel('Status')` (This will need disambiguation, perhaps via proximity to the cash management controls, but the provided snapshot labels them generally. I will rely on `page.getByLabel('Status').nth(1)` or similar context if necessary, but start with the generic label for simplicity if it proves unique in context). |
+| **US-003 (Trade)** | Action Listbox | `e178` | `page.getByRole('listbox', { name: 'Action' })` |
+| | Stock Symbol Textbox | `e183` | `page.getByRole('textbox', { name: 'Stock Symbol' })` |
+| | Quantity Spinbutton (Trade) | `e190` | `page.getByRole('spinbutton', { name: 'Quantity' })` |
+| | Execute Trade Button | `e191` | `page.getByRole('button', { name: 'Execute Trade' })` |
+| | Status Textbox (Trade) | `e197` | `page.getByLabel('Status')` |
+| **US-004 (Portfolio)** | Cash Balance ($) Textbox | `e83` | `page.getByLabel('Cash Balance ($)')` |
+| | Total Portfolio Value Textbox | `e73` | `page.getByLabel('Total Portfolio Value ($)')` |
+| | Total P/L Textbox | `e78` | `page.getByLabel('Total Profit / Loss ($)')` |
+| | Refresh Button | `e84` | `page.getByRole('button', { name: 'Refresh' })` |
+| | Holdings Table (Symbol column) | `e127` | `page.getByRole('grid', { name: 'Symbol Quantity Current Price Total Value' }).getByRole('cell', { name: 'Symbol' })` (Need to locate the specific data cell, not the header. I will target the table content) |
+| **US-004 (History)** | History Table Row (content) | `e328` | `page.getByRole('row', { name: /DEPOSIT/i })` |
+
+Let's proceed with generating the TypeScript code. I will use a single `test.describe.serial` block to ensure sequential execution for stateful testing of `user_A`. I will use a constant `BASE_URL`.
+
+```typescript
 import { test, expect, Page } from '@playwright/test';
 
 const BASE_URL = 'http://127.0.0.1:7860/';
@@ -34,6 +81,10 @@ test.describe.serial('Trading Simulation Platform - End-to-End Tests', () => {
         // 5. Click the "Create Account" button.
         await page.getByRole('button', { name: 'Create Account' }).click();
 
+        // Expected Results:
+        // Status message displays: "Success: Account 'user_A' created..."
+        await expect(getRegistrationStatusBox(page)).toHaveValue(/Success: Account 'user_A_ts' created with an initial deposit of \$10,000.00/);
+
         // On the "Portfolio" tab, Cash Balance displays: $10,000.00. (It should transition automatically)
         await expect(page.getByRole('tab', { name: 'Portfolio', selected: true })).toBeVisible();
         await expect(page.getByLabel('Cash Balance ($)')).toHaveValue('$10,000.00');
@@ -47,23 +98,23 @@ test.describe.serial('Trading Simulation Platform - End-to-End Tests', () => {
         await expect(historyTable.getByRole('row', { name: /DEPOSIT.*\$10,000\.00/i })).toBeVisible();
     });
 
-    // test('1.2 Attempt to Create Account with Existing Username', async ({ page }) => {
-    //     // Navigate back to the creation view if necessary, although usually, the Gradio app might not revert easily.
-    //     // Assuming navigation resets the view to the initial state if the system requires a login/logout flow, or we rely on the error message appearing without navigation.
-    //     await page.goto(BASE_URL);
+    test('1.2 Attempt to Create Account with Existing Username', async ({ page }) => {
+        // Navigate back to the creation view if necessary, although usually, the Gradio app might not revert easily.
+        // Assuming navigation resets the view to the initial state if the system requires a login/logout flow, or we rely on the error message appearing without navigation.
+        await page.goto(BASE_URL);
 
-    //     // 1. On the Account Creation screen, enter username: user_A
-    //     await page.getByLabel('Username').fill(USER_A);
-    //     // 2. Enter a password and an initial deposit amount (e.g., $1,000).
-    //     await page.getByLabel('Password').fill('newpass');
-    //     await page.getByRole('spinbutton', { name: 'Initial Deposit Amount ($)' }).fill('1000');
+        // 1. On the Account Creation screen, enter username: user_A
+        await page.getByLabel('Username').fill(USER_A);
+        // 2. Enter a password and an initial deposit amount (e.g., $1,000).
+        await page.getByLabel('Password').fill('newpass');
+        await page.getByRole('spinbutton', { name: 'Initial Deposit Amount ($)' }).fill('1000');
         
-    //     // 3. Click the "Create Account" button.
-    //     await page.getByRole('button', { name: 'Create Account' }).click();
+        // 3. Click the "Create Account" button.
+        await page.getByRole('button', { name: 'Create Account' }).click();
 
-    //     // Expected Results: Status message displays error.
-    //     await expect(getRegistrationStatusBox(page)).toHaveValue(/Error: Username 'user_A_ts' is already taken/);
-    // });
+        // Expected Results: Status message displays error.
+        await expect(getRegistrationStatusBox(page)).toHaveValue(/Error: Username 'user_A_ts' is already taken/);
+    });
     
     // --- US-002: Cash Management ---
     
@@ -338,3 +389,4 @@ test.describe.serial('Trading Simulation Platform - End-to-End Tests', () => {
         await expect(page.getByLabel('Total Profit / Loss ($)')).toHaveValue('$100.00');
     });
 });
+```

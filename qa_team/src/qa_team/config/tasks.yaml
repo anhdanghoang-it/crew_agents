@@ -3,6 +3,8 @@ take_snapshot_task:
     You will:
 
     1. **Navigate and Explore**
+      - You are given the userstories: {userstories}
+      - And the Url of the web application: {given_url}
       - Navigate to the provided URL: {given_url} using the browser tools
       - Explore the browser snapshot
       - Do not take screenshots unless absolutely necessary
@@ -132,3 +134,223 @@ take_snapshot_task:
     </example>
   agent: snapshot_agent
   output_file: output/{time_stamp}/snapshot.md  
+
+generate_test_plan_task:
+  description: >
+    You will:
+
+    1. **Analyze User Stories**
+      - You are given the userstories: {userstories}
+      - You are given the markdown snapshots from the snapshot task take_snapshot_task
+      - Carefully read and analyze each user story and the snapshot related to this user story to understand the requirements, 
+      acceptance criteria, and the snapshot of the application.
+
+    2. **Analyze User Flows**
+      - Map out the primary user journeys and identify critical paths through the application
+      - Consider different user types and their typical behaviors
+
+    3. **Design Comprehensive Scenarios**
+
+      Create detailed test scenarios that cover:
+      - Happy path scenarios (normal user behavior)
+      - Edge cases and boundary conditions
+      - Error handling and validation
+
+    4. **Structure Test Plans**
+
+      Each scenario must include:
+      - Clear, descriptive title
+      - Detailed step-by-step instructions
+      - Expected outcomes where appropriate
+      - Assumptions about starting state (always assume blank/fresh state)
+      - Success criteria and failure conditions
+
+    5. **Create Documentation**
+
+      Save your test plan as requested:
+      - Executive summary of the tested page/application
+      - Individual scenarios as separate sections
+      - Each scenario formatted with numbered steps
+      - Clear expected results for verification
+
+    <example-spec>
+    # Trading Simulation Platform - Comprehensive Test Plan
+
+    ## Application Overview
+
+    The Trading Simulation Platform is a Gradio-based web application that provides users with a realistic stock trading simulation environment. The platform enables users to manage virtual trading accounts, execute buy/sell transactions, manage cash balances, and track portfolio performance over time.
+
+    ### Core Features
+    - **Account Creation**: Users can create new accounts with initial capital deposits
+    - **Cash Management**: Deposit and withdraw funds from trading accounts
+    - **Stock Trading**: Buy and sell shares of stocks (AAPL, TSLA, GOOGL) with real-time pricing
+    - **Portfolio Tracking**: View current holdings, total portfolio value, and profit/loss calculations
+    - **Transaction History**: Complete audit trail of all account activities
+
+    ### Technical Stack
+    - **Frontend**: Gradio web interface with tabbed navigation
+    - **Pricing**: External `get_share_price()` API for stock prices
+    - **Data Storage**: User accounts, transactions, and holdings persistence
+
+    ---
+
+    ## Test Environment Setup
+
+    **Seed File**: `tests/seed.spec.ts`
+
+    ### Prerequisites
+    - Application running at `http://127.0.0.1:7860`
+    - Test account creation:
+      - Username: `trader123`
+      - Password: `password123`
+      - Initial deposit: `$10,000`
+
+    ### Supported Stock Symbols
+    - AAPL (Apple Inc.)
+    - TSLA (Tesla Inc.)
+    - GOOGL (Alphabet Inc.)
+
+    ---
+
+    ## Test Scenarios
+
+    ### Epic 1: Account Management (US-001)
+
+    #### 1.1 Create New Account with Valid Initial Deposit
+
+    **Priority**: Critical  
+    **User Story**: US-001  
+    **Seed**: `tests/seed.spec.ts`
+
+    **Steps:**
+    1. Navigate to `http://127.0.0.1:7860`
+    2. Locate the "Username" textbox
+    3. Enter username: `trader123`
+    4. Locate the "Password" textbox (password type)
+    5. Enter password: `password123`
+    6. Locate the "Initial Deposit Amount ($)" number input
+    7. Enter amount: `10000`
+    8. Click the "Create Account" button
+    9. Navigate to the "Portfolio" tab
+
+    **Expected Results:**
+    - Status message displays: "Success: Account 'trader123' created with an initial deposit of $10,000.00."
+    - Cash Balance shows: `$10,000.00`
+    - Total Portfolio Value shows: `$10,000.00`
+    - Total Profit / Loss shows: `$0.00`
+    - Current Holdings table is empty (no shares owned)
+    - Transaction History shows one DEPOSIT entry for $10,000.00
+
+    ---
+
+    #### 1.2
+    ...
+    </example-spec>
+
+    **Quality Standards**:
+    - Write steps that are specific enough for any tester to follow
+    - Include negative testing scenarios
+    - Ensure scenarios are independent and can be run in any order
+
+    **Output Format**: Always save the complete test plan as a markdown file with clear headings, numbered steps, and
+    professional formatting suitable for sharing with development and QA teams.
+  expected_output: >
+    Always save the complete test plan as a markdown file with clear headings, numbered steps, 
+    and professional formatting suitable for sharing with development and QA teams.
+  agent: test_plan_agent
+  output_file: output/{time_stamp}/test_plan.md
+  context:
+    - take_snapshot_task
+
+# generate_playwright_tests_task:
+#   description: >
+#     You will:
+#     Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
+#     # For each scenario in the test plan, do the following:
+#     - Generate executable Playwright test scripts in TypeScript using test plan from generate_test_plan_task 
+#     and snapshots from take_snapshot_task.
+#     - Utilize snapshots from take_snapshot_task for reliability.
+#     - Implement Playwright best practices including describe/it blocks, proper fixtures,
+#     page object patterns where applicable, and robust expect assertions.
+#     - Ensure each locator uniquely identifies a single element.
+#     - When multiple matches are possible (e.g., 'Password' and 'Confirm Password'),
+#     disambiguate using structured selectors from take_snapshot_task (like data-testid or aria-label).
+#     - When verifying UI text that may contain dynamic data, prefer toContainText() or
+#     regex-based matching instead of exact toHaveText() equality.
+#     - Always include the {given_url} as the base URL when navigating pages.
+#     - Never use relative URLs (e.g. "/") directly in page.goto().
+#     - Ensure every navigation command uses a full absolute URL derived from {given_url}.
+#     - Validate that page.goto() is syntactically correct and executable.
+#   expected_output: >
+#     Production-ready TypeScript Playwright spec file (.ts) containing properly structured
+#     test suites with describe/it blocks, type-safe selectors, appropriate fixtures, and
+#     comprehensive expect assertions.
+#     #IMPORTANT: 
+#     - Code must be executable without modification. All page.goto() calls should reference a complete absolute URL.
+#     - Output must be pure, runnable TypeScript code without markdown formatting, code fences, backticks, or
+#     explanatory text.
+#     - Generate ONLY executable code, nothing else
+#     - NO explanations, comments, or descriptions before or after the code
+#     - NO markdown code blocks (no ```language syntax)
+#     - NO preambles like "Here's the code:" or "This code does..."
+#     - Start immediately with the actual code
+#     - The output must be directly executable/runnable without any modifications
+#   agent: test_generator_agent
+#   output_file: output/{time_stamp}/simulation.spec.ts
+#   context:
+#     - take_snapshot_task  
+#     - generate_test_plan_task
+
+generate_playwright_tests_task:
+  description: >
+    You will:
+    Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
+    # For each test you generate
+    - Obtain the test plan with all the steps and verification specification
+    - Run the `generator_setup_page` tool to set up page for the scenario
+    - For each step and verification in the scenario, do the following:
+      - Use Playwright tool to manually execute it in real-time.
+      - Use the step description as the intent for each Playwright tool call.
+    - Retrieve generator log via `generator_read_log`
+    - Immediately after reading the test log, invoke `generator_write_test` with the generated source code
+      - File should contain single test
+      - File name must be fs-friendly scenario name
+      - Test must be placed in a describe matching the top-level test plan item
+      - Test title must match the scenario name
+      - Includes a comment with the step text before each step execution. Do not duplicate comments if step requires
+        multiple actions.
+      - Always use best practices from the log when generating tests.
+  expected_output: >
+    For following plan:
+
+    ```markdown file=specs/plan.md
+    ### 1. Adding New Todos
+    **Seed:** `tests/seed.spec.ts`
+
+    #### 1.1 Add Valid Todo
+    **Steps:**
+    1. Click in the "What needs to be done?" input field
+
+    #### 1.2 Add Multiple Todos
+    ...
+    ```
+
+    Following file is generated:
+
+    ```ts file=add-valid-todo.spec.ts
+    // spec: specs/plan.md
+    // seed: tests/seed.spec.ts
+
+    test.describe('Adding New Todos', () => {
+      test('Add Valid Todo', async { page } => {
+        // 1. Click in the "What needs to be done?" input field
+        await page.click(...);
+
+        ...
+      });
+    });
+    ```
+  agent: test_generator_agent
+  context:
+    - take_snapshot_task  
+    - generate_test_plan_task

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import warnings
+import time
 
 from datetime import datetime
 
@@ -17,9 +18,13 @@ def run():
     """
     Run the crew.
     """
+    with open(f"output/user_stories.md", "r", encoding="utf-8") as f:
+        user_stories = f.read()
+    
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'given_url': 'http://127.0.0.1:7860/',
+        'userstories': user_stories,
+        'time_stamp': int(time.time())
     }
 
     try:
