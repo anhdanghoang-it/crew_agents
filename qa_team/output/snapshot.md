@@ -1,3 +1,4 @@
+
 ### Epic/userstory: US-001 - User Account Creation
 - Page URL: http://127.0.0.1:7860/
 - Page Title: Trading Simulation Platform
@@ -14,10 +15,12 @@
             - generic [ref=e24]: Username
             - textbox "Username" [ref=e26]:
               - /placeholder: e.g., trader123
+              - text: traderQA
           - generic [ref=e28]:
             - generic [ref=e29]: Password
             - textbox "Password" [ref=e31]:
               - /placeholder: ""
+              - text: pass123
           - generic [ref=e33]:
             - generic [ref=e34]: Initial Deposit Amount ($)
             - spinbutton "Initial Deposit Amount ($)" [ref=e35]: "10000"
@@ -39,9 +42,8 @@
       - button "Settings Settings" [ref=e50] [cursor=pointer]:
         - text: Settings
         - img "Settings" [ref=e51]
-      - iframe [ref=e52]
-- iframe [ref=e52]:
-  
+      - iframe [ref=e52]:
+        
 ```
 ### Epic/userstory: US-002 - User Manages Cash Balance (Deposit/Withdraw)
 - Page URL: http://127.0.0.1:7860/
@@ -279,7 +281,7 @@
           - rowgroup [ref=e268]:
             - row [ref=e269]:
               - cell [ref=e270]:
-                - button [ref=e272] [cursor=pointer]: 2025-11-15 15:37:39
+                - button [ref=e272] [cursor=pointer]: 2025-11-16 10:27:46
               - cell [ref=e273]:
                 - button [ref=e275] [cursor=pointer]: DEPOSIT
               - cell [ref=e276]:
@@ -315,9 +317,9 @@
                     - button "Total" [ref=e325]
               - iframe [ref=e326]
             - rowgroup [ref=e327]:
-              - row "2025-11-15 15:37:39 DEPOSIT null null N/A $10,000.00" [ref=e328]:
-                - cell "2025-11-15 15:37:39" [ref=e329]:
-                  - button "2025-11-15 15:37:39" [ref=e331] [cursor=pointer]
+              - row "2025-11-16 10:27:46 DEPOSIT null null N/A $10,000.00" [ref=e328]:
+                - cell "2025-11-16 10:27:46" [ref=e329]:
+                  - button "2025-11-16 10:27:46" [ref=e331] [cursor=pointer]
                 - cell "DEPOSIT" [ref=e332]:
                   - button "DEPOSIT" [ref=e334] [cursor=pointer]
                 - cell "null" [ref=e335]:

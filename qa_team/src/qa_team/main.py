@@ -21,9 +21,13 @@ def run():
     with open(f"output/user_stories.md", "r", encoding="utf-8") as f:
         user_stories = f.read()
     
+    with open(f"output/snapshot.md", "r", encoding="utf-8") as f:
+        snapshot = f.read()    
+    
     inputs = {
         'given_url': 'http://127.0.0.1:7860/',
         'userstories': user_stories,
+        'snapshot': snapshot,
         'time_stamp': int(time.time())
     }
 

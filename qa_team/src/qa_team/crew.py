@@ -20,13 +20,13 @@ class QaTeam():
             )
         ]
 
-    @agent
-    def snapshot_agent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['snapshot_agent'], # type: ignore[index]
-            tools=self.get_mcp_tools(),
-            verbose=True
-        )
+    # @agent
+    # def snapshot_agent(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config['snapshot_agent'], # type: ignore[index]
+    #         tools=self.get_mcp_tools(),
+    #         verbose=True
+    #     )
     
     @agent
     def test_plan_agent(self) -> Agent:
@@ -35,18 +35,18 @@ class QaTeam():
             verbose=True
         )    
     
-    @agent
-    def test_generator_agent(self) -> Agent:
-        return Agent(
-            config=self.agents_config['test_generator_agent'], # type: ignore[index]
-            verbose=True
-        )      
+    # @agent
+    # def test_generator_agent(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config['test_generator_agent'], # type: ignore[index]
+    #         verbose=True
+    #     )      
 
-    @task
-    def take_snapshot_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['take_snapshot_task'], # type: ignore[index]
-        )
+    # @task
+    # def take_snapshot_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config['take_snapshot_task'], # type: ignore[index]
+    #     )
     
     @task
     def generate_test_plan_task(self) -> Task:
@@ -54,11 +54,11 @@ class QaTeam():
             config=self.tasks_config['generate_test_plan_task'], # type: ignore[index]
         )    
     
-    @task
-    def generate_playwright_tests_task(self) -> Task:
-        return Task(
-            config=self.tasks_config['generate_playwright_tests_task'], # type: ignore[index]
-        )
+    # @task
+    # def generate_playwright_tests_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config['generate_playwright_tests_task'], # type: ignore[index]
+    #     )
 
     @crew
     def crew(self) -> Crew:

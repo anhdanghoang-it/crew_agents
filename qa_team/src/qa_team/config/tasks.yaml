@@ -1,266 +1,291 @@
-take_snapshot_task:
-  description: >
-    You will:
+# take_snapshot_task:
+#   description: >
+#     You will:
 
-    1. **Navigate and Explore**
-      - You are given the userstories: {userstories}
-      - And the Url of the web application: {given_url}
-      - Navigate to the provided URL: {given_url} using the browser tools
-      - Explore the browser snapshot
-      - Do not take screenshots unless absolutely necessary
-      - Use browser_* tools to navigate and discover interface
-      - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
+#     1. **Navigate and Explore**
+#       - You are given the userstories: {userstories}
+#       - And the Url of the web application: {given_url}
+#       - Navigate to the provided URL: {given_url} using the browser tools
+#       - Explore the browser snapshot
+#       - Do not take screenshots unless absolutely necessary
+#       - Use browser_* tools to navigate and discover interface
+#       - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
 
-    2. **Create Documentation**
+#     2. **Create Documentation**
 
-      Save your findings as markdown documentation following this structure:
-      ### Epic/userstory: epic/userstory name in the userstories
-      - Page URL: 
-      - Page Title: 
-      - Page Snapshot:
-      ```yaml```
-      ### Epic/userstory: epic/userstory name in the userstories
-      - Page URL: 
-      - Page Title: 
-      - Page Snapshot:
-      ```yaml```
-  expected_output: >
-    Always save the complete test plan as a markdown file with clear headings and structured sections for each userstory.
-    following this structure:
-    ### Epic/userstory: epic/userstory name in the userstories
-      - Page URL: 
-      - Page Title: 
-      - Page Snapshot:
-      ```yaml```
-    ### Epic/userstory: epic/userstory name in the userstories
-    - Page URL: 
-    - Page Title: 
-    - Page Snapshot:
-    ```yaml```
-    <example>
-      ### Epic/userstory: epic/userstory name in the userstories
-      - Page URL: http://127.0.0.1:7860/
-      - Page Title: Trading Simulation Platform
-      - Page Snapshot:
-      ```yaml
-      - main [ref=e4]:
-        - generic [ref=e5]:
-          - generic [ref=e7]:
-            - heading "Trading Simulation Platform" [level=1] [ref=e12]
-            - paragraph [ref=e17]: Create an account to start managing your virtual portfolio. Deposit funds, trade stocks, and track your performance.
-            - generic [ref=e18]:
-              - generic [ref=e19]:
-                - generic [ref=e20]:
-                  - button [ref=e21] [cursor=pointer]: Portfolio
-                  - button [ref=e22] [cursor=pointer]: Cash Management
-                  - button [ref=e23] [cursor=pointer]: Trade
-                  - button [ref=e24] [cursor=pointer]: History
-                - tablist [ref=e25]:
-                  - tab "Portfolio" [selected] [ref=e26] [cursor=pointer]
-                  - tab "Cash Management" [ref=e27] [cursor=pointer]
-                  - tab "Trade" [ref=e28] [cursor=pointer]
-                  - tab "History" [ref=e29] [cursor=pointer]
-              - tabpanel [ref=e30]:
-                - generic [ref=e31]:
-                  - generic [ref=e33]:
-                    - generic [ref=e35]:
-                      - generic [ref=e36]: Total Portfolio Value ($)
-                      - textbox "Total Portfolio Value ($)" [disabled] [ref=e38]:
-                        - /placeholder: ""
-                        - text: $10,000.00
-                    - generic [ref=e40]:
-                      - generic [ref=e41]: Total Profit / Loss ($)
-                      - textbox "Total Profit / Loss ($)" [disabled] [ref=e43]:
-                        - /placeholder: ""
-                        - text: $0.00
-                    - generic [ref=e45]:
-                      - generic [ref=e46]: Cash Balance ($)
-                      - textbox "Cash Balance ($)" [disabled] [ref=e48]:
-                        - /placeholder: ""
-                        - text: $10,000.00
-                  - button "Refresh" [ref=e49] [cursor=pointer]
-                  - heading "Current Holdings" [level=3] [ref=e54]
-                  - grid [ref=e57]:
-                    - table [ref=e58]:
-                      - rowgroup [ref=e59]:
-                        - row [ref=e60]:
-                          - cell [ref=e61]:
-                            - button [ref=e64] [cursor=pointer]:
-                              - button [ref=e65]: Symbol
-                          - cell [ref=e66]:
-                            - button [ref=e69] [cursor=pointer]:
-                              - button [ref=e70]: Quantity
-                          - cell [ref=e71]:
-                            - button [ref=e74] [cursor=pointer]:
-                              - button [ref=e75]: Current Price
-                          - cell [ref=e76]:
-                            - button [ref=e79] [cursor=pointer]:
-                              - button [ref=e80]: Total Value
-                    - button "Drop CSV or TSV files here to import data into dataframe" [ref=e81]:
-                      - table [ref=e85]:
-                        - rowgroup [ref=e86]:
-                          - row "Symbol Quantity Current Price Total Value" [ref=e87]:
-                            - cell "Symbol" [ref=e88]:
-                              - button "Symbol" [ref=e91] [cursor=pointer]:
-                                - button "Symbol" [ref=e92]
-                            - cell "Quantity" [ref=e93]:
-                              - button "Quantity" [ref=e96] [cursor=pointer]:
-                                - button "Quantity" [ref=e97]
-                            - cell "Current Price" [ref=e98]:
-                              - button "Current Price" [ref=e101] [cursor=pointer]:
-                                - button "Current Price" [ref=e102]
-                            - cell "Total Value" [ref=e103]:
-                              - button "Total Value" [ref=e106] [cursor=pointer]:
-                                - button "Total Value" [ref=e107]
-                          - iframe [ref=e108]:
+#       Save your findings as markdown documentation following this structure:
+#       ### Epic/userstory: epic/userstory name in the userstories
+#       - Page URL: 
+#       - Page Title: 
+#       - Page Snapshot:
+#       ```yaml```
+#       ### Epic/userstory: epic/userstory name in the userstories
+#       - Page URL: 
+#       - Page Title: 
+#       - Page Snapshot:
+#       ```yaml```
+#   expected_output: >
+#     Always save the complete test plan as a markdown file with clear headings and structured sections for each userstory.
+#     following this structure:
+#     ### Epic/userstory: epic/userstory name in the userstories
+#       - Page URL: 
+#       - Page Title: 
+#       - Page Snapshot:
+#       ```yaml```
+#     ### Epic/userstory: epic/userstory name in the userstories
+#     - Page URL: 
+#     - Page Title: 
+#     - Page Snapshot:
+#     ```yaml```
+#     <example>
+#       ### Epic/userstory: epic/userstory name in the userstories
+#       - Page URL: http://127.0.0.1:7860/
+#       - Page Title: Trading Simulation Platform
+#       - Page Snapshot:
+#       ```yaml
+#       - main [ref=e4]:
+#         - generic [ref=e5]:
+#           - generic [ref=e7]:
+#             - heading "Trading Simulation Platform" [level=1] [ref=e12]
+#             - paragraph [ref=e17]: Create an account to start managing your virtual portfolio. Deposit funds, trade stocks, and track your performance.
+#             - generic [ref=e18]:
+#               - generic [ref=e19]:
+#                 - generic [ref=e20]:
+#                   - button [ref=e21] [cursor=pointer]: Portfolio
+#                   - button [ref=e22] [cursor=pointer]: Cash Management
+#                   - button [ref=e23] [cursor=pointer]: Trade
+#                   - button [ref=e24] [cursor=pointer]: History
+#                 - tablist [ref=e25]:
+#                   - tab "Portfolio" [selected] [ref=e26] [cursor=pointer]
+#                   - tab "Cash Management" [ref=e27] [cursor=pointer]
+#                   - tab "Trade" [ref=e28] [cursor=pointer]
+#                   - tab "History" [ref=e29] [cursor=pointer]
+#               - tabpanel [ref=e30]:
+#                 - generic [ref=e31]:
+#                   - generic [ref=e33]:
+#                     - generic [ref=e35]:
+#                       - generic [ref=e36]: Total Portfolio Value ($)
+#                       - textbox "Total Portfolio Value ($)" [disabled] [ref=e38]:
+#                         - /placeholder: ""
+#                         - text: $10,000.00
+#                     - generic [ref=e40]:
+#                       - generic [ref=e41]: Total Profit / Loss ($)
+#                       - textbox "Total Profit / Loss ($)" [disabled] [ref=e43]:
+#                         - /placeholder: ""
+#                         - text: $0.00
+#                     - generic [ref=e45]:
+#                       - generic [ref=e46]: Cash Balance ($)
+#                       - textbox "Cash Balance ($)" [disabled] [ref=e48]:
+#                         - /placeholder: ""
+#                         - text: $10,000.00
+#                   - button "Refresh" [ref=e49] [cursor=pointer]
+#                   - heading "Current Holdings" [level=3] [ref=e54]
+#                   - grid [ref=e57]:
+#                     - table [ref=e58]:
+#                       - rowgroup [ref=e59]:
+#                         - row [ref=e60]:
+#                           - cell [ref=e61]:
+#                             - button [ref=e64] [cursor=pointer]:
+#                               - button [ref=e65]: Symbol
+#                           - cell [ref=e66]:
+#                             - button [ref=e69] [cursor=pointer]:
+#                               - button [ref=e70]: Quantity
+#                           - cell [ref=e71]:
+#                             - button [ref=e74] [cursor=pointer]:
+#                               - button [ref=e75]: Current Price
+#                           - cell [ref=e76]:
+#                             - button [ref=e79] [cursor=pointer]:
+#                               - button [ref=e80]: Total Value
+#                     - button "Drop CSV or TSV files here to import data into dataframe" [ref=e81]:
+#                       - table [ref=e85]:
+#                         - rowgroup [ref=e86]:
+#                           - row "Symbol Quantity Current Price Total Value" [ref=e87]:
+#                             - cell "Symbol" [ref=e88]:
+#                               - button "Symbol" [ref=e91] [cursor=pointer]:
+#                                 - button "Symbol" [ref=e92]
+#                             - cell "Quantity" [ref=e93]:
+#                               - button "Quantity" [ref=e96] [cursor=pointer]:
+#                                 - button "Quantity" [ref=e97]
+#                             - cell "Current Price" [ref=e98]:
+#                               - button "Current Price" [ref=e101] [cursor=pointer]:
+#                                 - button "Current Price" [ref=e102]
+#                             - cell "Total Value" [ref=e103]:
+#                               - button "Total Value" [ref=e106] [cursor=pointer]:
+#                                 - button "Total Value" [ref=e107]
+#                           - iframe [ref=e108]:
                             
-                        - rowgroup
-                        - rowgroup
-          - generic [ref=e109]:
-            - button "Use via API logo" [ref=e110] [cursor=pointer]:
-              - text: Use via API
-              - img "logo" [ref=e111]
-            - generic [ref=e112]: ·
-            - link "Built with Gradio logo" [ref=e113] [cursor=pointer]:
-              - /url: https://gradio.app
-              - text: Built with Gradio
-              - img "logo" [ref=e114]
-            - generic [ref=e115]: ·
-            - button "Settings Settings" [ref=e116] [cursor=pointer]:
-              - text: Settings
-              - img "Settings" [ref=e117]
-            - iframe [ref=e118]:
-      ```
-    </example>
-  agent: snapshot_agent
-  output_file: output/{time_stamp}/snapshot.md  
+#                         - rowgroup
+#                         - rowgroup
+#           - generic [ref=e109]:
+#             - button "Use via API logo" [ref=e110] [cursor=pointer]:
+#               - text: Use via API
+#               - img "logo" [ref=e111]
+#             - generic [ref=e112]: ·
+#             - link "Built with Gradio logo" [ref=e113] [cursor=pointer]:
+#               - /url: https://gradio.app
+#               - text: Built with Gradio
+#               - img "logo" [ref=e114]
+#             - generic [ref=e115]: ·
+#             - button "Settings Settings" [ref=e116] [cursor=pointer]:
+#               - text: Settings
+#               - img "Settings" [ref=e117]
+#             - iframe [ref=e118]:
+#       ```
+#     </example>
+#   agent: snapshot_agent
+#   output_file: output/{time_stamp}/snapshot.md  
 
-generate_test_plan_task:
-  description: >
-    You will:
+# generate_test_plan_task:
+#   description: >
+#     You will:
 
-    1. **Analyze User Stories**
-      - You are given the userstories: {userstories}
-      - You are given the markdown snapshots from the snapshot task take_snapshot_task
-      - Carefully read and analyze each user story and the snapshot related to this user story to understand the requirements, 
-      acceptance criteria, and the snapshot of the application.
+#     1. **Analyze User Stories**
+#       - You are given the userstories: <userstories>{userstories}</userstories>
+#       - You are given the markdown snapshots from the snapshot task take_snapshot_task: <snapshot>{snapshot}</snapshot>
+#       - Carefully read and analyze each user story and the snapshot related to this user story to understand the requirements, 
+#       acceptance criteria, and the snapshot of the application.
 
-    2. **Analyze User Flows**
-      - Map out the primary user journeys and identify critical paths through the application
-      - Consider different user types and their typical behaviors
+#     2. **Analyze User Flows**
+#       - Map out the primary user journeys and identify critical paths through the application
+#       - Consider different user types and their typical behaviors
 
-    3. **Design Comprehensive Scenarios**
+#     3. **Design Comprehensive Scenarios**
 
-      Create detailed test scenarios that cover:
-      - Happy path scenarios (normal user behavior)
-      - Edge cases and boundary conditions
-      - Error handling and validation
+#       Create detailed test scenarios that cover:
+#       - Happy path scenarios (normal user behavior)
+#       - Edge cases and boundary conditions
+#       - Error handling and validation
 
-    4. **Structure Test Plans**
+#     4. **Structure Test Plans**
 
-      Each scenario must include:
-      - Clear, descriptive title
-      - Detailed step-by-step instructions
-      - Expected outcomes where appropriate
-      - Assumptions about starting state (always assume blank/fresh state)
-      - Success criteria and failure conditions
+#       Each scenario must include:
+#       - Clear, descriptive title
+#       - Detailed step-by-step instructions
+#       - Expected outcomes where appropriate
+#       - Assumptions about starting state (always assume blank/fresh state)
+#       - Success criteria and failure conditions
 
-    5. **Create Documentation**
+#     5. **Create Documentation**
 
-      Save your test plan as requested:
-      - Executive summary of the tested page/application
-      - Individual scenarios as separate sections
-      - Each scenario formatted with numbered steps
-      - Clear expected results for verification
+#       Save your test plan as requested:
+#       - Executive summary of the tested page/application
+#       - Individual scenarios as separate sections
+#       - Each scenario formatted with numbered steps
+#       - Include the seeding steps if needed to reach the initial state
+#       - Clear expected results for verification
 
-    <example-spec>
-    # Trading Simulation Platform - Comprehensive Test Plan
+#     <example-spec>
+#     # Trading Simulation Platform - Comprehensive Test Plan
 
-    ## Application Overview
+#     ## Application Overview
 
-    The Trading Simulation Platform is a Gradio-based web application that provides users with a realistic stock trading simulation environment. The platform enables users to manage virtual trading accounts, execute buy/sell transactions, manage cash balances, and track portfolio performance over time.
+#     The Trading Simulation Platform is a Gradio-based web application that provides users with a realistic stock trading simulation environment. The platform enables users to manage virtual trading accounts, execute buy/sell transactions, manage cash balances, and track portfolio performance over time.
 
-    ### Core Features
-    - **Account Creation**: Users can create new accounts with initial capital deposits
-    - **Cash Management**: Deposit and withdraw funds from trading accounts
-    - **Stock Trading**: Buy and sell shares of stocks (AAPL, TSLA, GOOGL) with real-time pricing
-    - **Portfolio Tracking**: View current holdings, total portfolio value, and profit/loss calculations
-    - **Transaction History**: Complete audit trail of all account activities
+#     ### Core Features
+#     - **Account Creation**: Users can create new accounts with initial capital deposits
+#     - **Cash Management**: Deposit and withdraw funds from trading accounts
+#     - **Stock Trading**: Buy and sell shares of stocks (AAPL, TSLA, GOOGL) with real-time pricing
+#     - **Portfolio Tracking**: View current holdings, total portfolio value, and profit/loss calculations
+#     - **Transaction History**: Complete audit trail of all account activities
 
-    ### Technical Stack
-    - **Frontend**: Gradio web interface with tabbed navigation
-    - **Pricing**: External `get_share_price()` API for stock prices
-    - **Data Storage**: User accounts, transactions, and holdings persistence
+#     ### Technical Stack
+#     - **Frontend**: Gradio web interface with tabbed navigation
+#     - **Pricing**: External `get_share_price()` API for stock prices
+#     - **Data Storage**: User accounts, transactions, and holdings persistence
 
-    ---
+#     ---
 
-    ## Test Environment Setup
+#     ## Test Environment Setup
 
-    **Seed File**: `tests/seed.spec.ts`
+#     **Seed File**: `tests/seed.spec.ts`
 
-    ### Prerequisites
-    - Application running at `http://127.0.0.1:7860`
-    - Test account creation:
-      - Username: `trader123`
-      - Password: `password123`
-      - Initial deposit: `$10,000`
+#     ### Prerequisites
+#     - Application running at `http://127.0.0.1:7860`
+#     - Test account creation:
+#       - Username: `trader123`
+#       - Password: `password123`
+#       - Initial deposit: `$10,000`
 
-    ### Supported Stock Symbols
-    - AAPL (Apple Inc.)
-    - TSLA (Tesla Inc.)
-    - GOOGL (Alphabet Inc.)
+#     ### Supported Stock Symbols
+#     - AAPL (Apple Inc.)
+#     - TSLA (Tesla Inc.)
+#     - GOOGL (Alphabet Inc.)
 
-    ---
+#     ---
 
-    ## Test Scenarios
+#     ## Test Scenarios
 
-    ### Epic 1: Account Management (US-001)
+#     ### Epic 1: Account Management (US-001)
 
-    #### 1.1 Create New Account with Valid Initial Deposit
+#     #### 1.1 Create New Account with Valid Initial Deposit
 
-    **Priority**: Critical  
-    **User Story**: US-001  
-    **Seed**: `tests/seed.spec.ts`
+#     **Priority**: Critical  
+#     **User Story**: US-001  
+#     **Seeding steps:** N/A (fresh state)
 
-    **Steps:**
-    1. Navigate to `http://127.0.0.1:7860`
-    2. Locate the "Username" textbox
-    3. Enter username: `trader123`
-    4. Locate the "Password" textbox (password type)
-    5. Enter password: `password123`
-    6. Locate the "Initial Deposit Amount ($)" number input
-    7. Enter amount: `10000`
-    8. Click the "Create Account" button
-    9. Navigate to the "Portfolio" tab
+#     **Steps:**
+#     1. Navigate to `http://127.0.0.1:7860`
+#     2. Locate the "Username" textbox
+#     3. Enter username: `trader123`
+#     4. Locate the "Password" textbox (password type)
+#     5. Enter password: `password123`
+#     6. Locate the "Initial Deposit Amount ($)" number input
+#     7. Enter amount: `10000`
+#     8. Click the "Create Account" button
+#     9. Navigate to the "Portfolio" tab
 
-    **Expected Results:**
-    - Status message displays: "Success: Account 'trader123' created with an initial deposit of $10,000.00."
-    - Cash Balance shows: `$10,000.00`
-    - Total Portfolio Value shows: `$10,000.00`
-    - Total Profit / Loss shows: `$0.00`
-    - Current Holdings table is empty (no shares owned)
-    - Transaction History shows one DEPOSIT entry for $10,000.00
+#     **Expected Results:**
+#     - Cash Balance shows: `$10,000.00`
+#     - Total Portfolio Value shows: `$10,000.00`
+#     - Total Profit / Loss shows: `$0.00`
+#     - Current Holdings table is empty (no shares owned)
+#     - Transaction History shows one DEPOSIT entry for $10,000.00
 
-    ---
+#     ---
 
-    #### 1.2
-    ...
-    </example-spec>
+#     ### Epic 2: Cash Management (US-002)
 
-    **Quality Standards**:
-    - Write steps that are specific enough for any tester to follow
-    - Include negative testing scenarios
-    - Ensure scenarios are independent and can be run in any order
+#     #### 2.1 Successful Deposit and Balance Update
 
-    **Output Format**: Always save the complete test plan as a markdown file with clear headings, numbered steps, and
-    professional formatting suitable for sharing with development and QA teams.
-  expected_output: >
-    Always save the complete test plan as a markdown file with clear headings, numbered steps, 
-    and professional formatting suitable for sharing with development and QA teams.
-  agent: test_plan_agent
-  output_file: output/{time_stamp}/test_plan.md
-  context:
-    - take_snapshot_task
+#     **Priority**: High
+#     **User Story**: US-002 (AC-1)
+#     **Seeding steps:** Account `traderQA` exists with Cash Balance $10,000.00.
+#     1. Navigate to `http://127.0.0.1:7860`
+#     2. Locate the "Username" textbox
+#     3. Enter username: `traderQA`
+#     4. Locate the "Password" textbox (password type)
+#     5. Enter password: `password123`
+#     6. Locate the "Initial Deposit Amount ($)" number input
+#     7. Enter amount: `10000`
+#     8. Click the "Create Account" button
+
+#     **Steps:**
+#     1. Navigate to the "Cash Management" tab (ref: e62).
+#     2. Verify Current Cash Balance (ref: e151) is `$10,000.00`.
+#     3. Enter amount to deposit: `2000.00` in the Amount ($) input (ref: e158).
+#     4. Click the "Deposit" button (ref: e160).
+#     5. Navigate to the "History" tab (ref: e64).
+
+#     **Expected Results:**
+#     - **Step 4 Status**: Status textbox (ref: e167) displays: "Success: $2,000.00 deposited. Your new cash balance is $12,000.00."
+#     - Current Cash Balance (ref: e151) updates to `$12,000.00`.
+#     - **Step 5 History**: A new 'DEPOSIT' transaction for $2,000.00 is recorded.
+#     </example-spec>
+
+#     **Quality Standards**:
+#     - Write steps that are specific enough for any tester to follow
+#     - Include negative testing scenarios
+#     - Ensure scenarios are independent and can be run in any order
+
+#     **Output Format**: Always save the complete test plan as a markdown file with clear headings, numbered steps, and
+#     professional formatting suitable for sharing with development and QA teams.
+#   expected_output: >
+#     Always save the complete test plan as a markdown file with clear headings, numbered steps, 
+#     and professional formatting suitable for sharing with development and QA teams.
+#   agent: test_plan_agent
+#   output_file: output/{time_stamp}/test_plan.md
+  # context:
+  #   - take_snapshot_task
 
 # generate_playwright_tests_task:
 #   description: >
@@ -301,56 +326,56 @@ generate_test_plan_task:
 #     - take_snapshot_task  
 #     - generate_test_plan_task
 
-generate_playwright_tests_task:
-  description: >
-    You will:
-    Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
-    # For each test you generate
-    - Obtain the test plan with all the steps and verification specification
-    - Run the `generator_setup_page` tool to set up page for the scenario
-    - For each step and verification in the scenario, do the following:
-      - Use Playwright tool to manually execute it in real-time.
-      - Use the step description as the intent for each Playwright tool call.
-    - Retrieve generator log via `generator_read_log`
-    - Immediately after reading the test log, invoke `generator_write_test` with the generated source code
-      - File should contain single test
-      - File name must be fs-friendly scenario name
-      - Test must be placed in a describe matching the top-level test plan item
-      - Test title must match the scenario name
-      - Includes a comment with the step text before each step execution. Do not duplicate comments if step requires
-        multiple actions.
-      - Always use best practices from the log when generating tests.
-  expected_output: >
-    For following plan:
+# generate_playwright_tests_task:
+#   description: >
+#     You will:
+#     Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
+#     # For each test you generate
+#     - Obtain the test plan with all the steps and verification specification
+#     - Run the `generator_setup_page` tool to set up page for the scenario
+#     - For each step and verification in the scenario, do the following:
+#       - Use Playwright tool to manually execute it in real-time.
+#       - Use the step description as the intent for each Playwright tool call.
+#     - Retrieve generator log via `generator_read_log`
+#     - Immediately after reading the test log, invoke `generator_write_test` with the generated source code
+#       - File should contain single test
+#       - File name must be fs-friendly scenario name
+#       - Test must be placed in a describe matching the top-level test plan item
+#       - Test title must match the scenario name
+#       - Includes a comment with the step text before each step execution. Do not duplicate comments if step requires
+#         multiple actions.
+#       - Always use best practices from the log when generating tests.
+#   expected_output: >
+#     For following plan:
 
-    ```markdown file=specs/plan.md
-    ### 1. Adding New Todos
-    **Seed:** `tests/seed.spec.ts`
+#     ```markdown file=specs/plan.md
+#     ### 1. Adding New Todos
+#     **Seed:** `tests/seed.spec.ts`
 
-    #### 1.1 Add Valid Todo
-    **Steps:**
-    1. Click in the "What needs to be done?" input field
+#     #### 1.1 Add Valid Todo
+#     **Steps:**
+#     1. Click in the "What needs to be done?" input field
 
-    #### 1.2 Add Multiple Todos
-    ...
-    ```
+#     #### 1.2 Add Multiple Todos
+#     ...
+#     ```
 
-    Following file is generated:
+#     Following file is generated:
 
-    ```ts file=add-valid-todo.spec.ts
-    // spec: specs/plan.md
-    // seed: tests/seed.spec.ts
+#     ```ts file=add-valid-todo.spec.ts
+#     // spec: specs/plan.md
+#     // seed: tests/seed.spec.ts
 
-    test.describe('Adding New Todos', () => {
-      test('Add Valid Todo', async { page } => {
-        // 1. Click in the "What needs to be done?" input field
-        await page.click(...);
+#     test.describe('Adding New Todos', () => {
+#       test('Add Valid Todo', async { page } => {
+#         // 1. Click in the "What needs to be done?" input field
+#         await page.click(...);
 
-        ...
-      });
-    });
-    ```
-  agent: test_generator_agent
-  context:
-    - take_snapshot_task  
-    - generate_test_plan_task
+#         ...
+#       });
+#     });
+#     ```
+#   agent: test_generator_agent
+#   context:
+#     - take_snapshot_task  
+#     - generate_test_plan_task
