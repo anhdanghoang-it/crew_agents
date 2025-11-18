@@ -20,6 +20,14 @@ class QaTeam():
             )
         ]
 
+    # mcp_server_params = [
+    #     # StdIO Server
+    #     StdioServerParameters(
+    #         command="npx",
+    #         args=["playwright", "run-test-mcp-server"],
+    #     )
+    # ]
+
     # @agent
     # def snapshot_agent(self) -> Agent:
     #     return Agent(
@@ -35,12 +43,20 @@ class QaTeam():
     #         verbose=True
     #     )    
     
+    # @agent
+    # def test_generator_agent(self) -> Agent:
+    #     return Agent(
+    #         config=self.agents_config['test_generator_agent'], # type: ignore[index]
+    #         verbose=True
+    #     )    
+    
     @agent
-    def test_generator_agent(self) -> Agent:
+    def test_healer_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config['test_generator_agent'], # type: ignore[index]
+            config=self.agents_config['test_healer_agent'], # type: ignore[index]
+            tools=self.get_mcp_tools(),
             verbose=True
-        )      
+        )  
 
     # @task
     # def take_snapshot_task(self) -> Task:
@@ -54,11 +70,17 @@ class QaTeam():
     #         config=self.tasks_config['generate_test_plan_task'], # type: ignore[index]
     #     )    
     
+    # @task
+    # def generate_playwright_tests_task(self) -> Task:
+    #     return Task(
+    #         config=self.tasks_config['generate_playwright_tests_task'], # type: ignore[index]
+    #     )
+
     @task
-    def generate_playwright_tests_task(self) -> Task:
+    def heal_playwright_tests_task(self) -> Task:
         return Task(
-            config=self.tasks_config['generate_playwright_tests_task'], # type: ignore[index]
-        )
+            config=self.tasks_config['heal_playwright_tests_task'], # type: ignore[index]
+        )    
 
     @crew
     def crew(self) -> Crew:

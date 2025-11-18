@@ -25,13 +25,17 @@ def run():
         snapshot = f.read()   
 
     with open(f"output/test_plan.md", "r", encoding="utf-8") as f:
-        test_plan = f.read()          
+        test_plan = f.read()     
+
+    with open(f"output/simulation.spec.ts", "r", encoding="utf-8") as f:
+        test_scripts = f.read()        
     
     inputs = {
         'given_url': 'http://127.0.0.1:7860/',
         'userstories': user_stories,
         'snapshot': snapshot,
         'test_plan': test_plan,
+        'test_scripts': test_scripts,
         'time_stamp': int(time.time())
     }
 

@@ -287,31 +287,93 @@
   # context:
   #   - take_snapshot_task
 
-generate_playwright_tests_task:
+# generate_playwright_tests_task:
+#   description: >
+#     You will:
+#     # For each scenario in the test plan, do the following:
+#     Here is the test plan from generate_test_plan_task: <test_plan>{test_plan}</test_plan>
+#     Here is the snapshots from take_snapshot_task: <snapshots>{snapshot}</snapshots>
+#     - Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
+#     - Generate executable Playwright test scripts in TypeScript using test plan from generate_test_plan_task
+#     and snapshots from take_snapshot_task.
+#     - Utilize snapshots for reliability.
+#     - Implement Playwright best practices including describe/it blocks, proper fixtures,
+#     page object patterns where applicable, and robust expect assertions.
+#     - Ensure each locator uniquely identifies a single element.
+#     - When multiple matches are possible (e.g., 'Password' and 'Confirm Password'),
+#     disambiguate using structured selectors from snapshots (like data-testid or aria-label).
+#     - When verifying UI text that may contain dynamic data, prefer toContainText() or
+#     regex-based matching instead of exact toHaveText() equality.
+#     - Always include the {given_url} as the base URL when navigating pages.
+#     - Never use relative URLs (e.g. "/") directly in page.goto().
+#     - Ensure every navigation command uses a full absolute URL derived from {given_url}.
+#     - Validate that page.goto() is syntactically correct and executable.
+#   expected_output: >
+#     Production-ready TypeScript Playwright spec file (.ts) containing properly structured
+#     test suites with describe/it blocks, type-safe selectors, appropriate fixtures, and
+#     comprehensive expect assertions.
+#     #IMPORTANT: 
+#     - Code must be executable without modification. All page.goto() calls should reference a complete absolute URL.
+#     - Output must be pure, runnable TypeScript code without markdown formatting, code fences, backticks, or
+#     explanatory text.
+#     - Generate ONLY executable code, nothing else
+#     - NO explanations, comments, or descriptions before or after the code
+#     - NO markdown code blocks (no ```language syntax)
+#     - NO preambles like "Here's the code:" or "This code does..."
+#     - Start immediately with the actual code
+#     - The output must be directly executable/runnable without any modifications
+#   agent: test_generator_agent
+#   output_file: output/{time_stamp}/simulation.spec.ts
+  # context:
+  #   - take_snapshot_task  
+  #   - generate_test_plan_task
+
+heal_playwright_tests_task:
   description: >
-    You will:
-    # For each scenario in the test plan, do the following:
-    Here is the test plan from generate_test_plan_task: <test_plan>{test_plan}</test_plan>
-    Here is the snapshots from take_snapshot_task: <snapshots>{snapshot}</snapshots>
-    - Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
-    - Generate executable Playwright test scripts in TypeScript using test plan from generate_test_plan_task
-    and snapshots from take_snapshot_task.
-    - Utilize snapshots for reliability.
-    - Implement Playwright best practices including describe/it blocks, proper fixtures,
-    page object patterns where applicable, and robust expect assertions.
-    - Ensure each locator uniquely identifies a single element.
-    - When multiple matches are possible (e.g., 'Password' and 'Confirm Password'),
-    disambiguate using structured selectors from snapshots (like data-testid or aria-label).
-    - When verifying UI text that may contain dynamic data, prefer toContainText() or
-    regex-based matching instead of exact toHaveText() equality.
-    - Always include the {given_url} as the base URL when navigating pages.
-    - Never use relative URLs (e.g. "/") directly in page.goto().
-    - Ensure every navigation command uses a full absolute URL derived from {given_url}.
-    - Validate that page.goto() is syntactically correct and executable.
+    Your job is to heal and fix this test: 
+    <test_case_to_check>
+    ```
+    const BASE_URL = 'http://127.0.0.1:7860/';
+    test('1.3 Attempt to Create Account with Invalid Initial Deposit', async ({ page }) => {
+        await page.goto(BASE_URL);
+
+        // Attempt with negative value
+        await page.getByLabel('Username').fill('invalidTrader');
+        await page.getByLabel('Password').fill('password123');
+        await page.getByLabel('Initial Deposit Amount ($)').fill('-100');
+        await page.getByRole('button', { name: 'Create Account' }).click();
+        await expect(page.getByLabel('Status').first()).toHaveValue("Error: Initial deposit must be a positive number.");
+
+        // Attempt with zero
+        await page.getByLabel('Initial Deposit Amount ($)').fill('0');
+        await page.getByRole('button', { name: 'Create Account' }).click();
+        await expect(page.getByLabel('Status').first()).toHaveValue("Error: Initial deposit must be a positive number.");
+    });```
+    </test_case_to_check>
+    Your workflow:
+    1. **Initial Execution**: Run the provided test to observe failures.
+    2. **Error Investigation**: When the test pauses on errors, use available Playwright MCP tools to:
+      - Examine the error details
+      - Capture page snapshot to understand the context
+      - Analyze selectors, timing issues, or assertion failures
+      - The expected output may sometimes contain dynamic data, use regex to match the dynamic parts
+      - The expected output may sometimes show in toast notifications or modal dialogs, make sure to capture those UI elements in your investigation
+    3. **Root Cause Analysis**: Determine the underlying cause of the failure by examining:
+      - Element selectors that may have changed
+      - Timing and synchronization issues
+      - Data dependencies or test environment problems
+      - Application changes that broke test assumptions
+      - The expected output may sometimes contain dynamic data, use regex to match the dynamic parts
+      - The expected output may sometimes show in toast notifications or modal dialogs, make sure to capture those UI elements in your investigation
+    4. **Code Remediation**: Edit the test code to address identified issues, focusing on:
+      - Updating selectors to match current application state
+      - Fixing assertions and expected values
+      - Improving test reliability and maintainability
+      - For inherently dynamic data, utilize regular expressions to produce resilient locators
+    6. **Verification**: Restart the test after each fix to validate the changes
+    7. **Iteration**: Repeat the investigation and fixing process until the test passes cleanly
   expected_output: >
-    Production-ready TypeScript Playwright spec file (.ts) containing properly structured
-    test suites with describe/it blocks, type-safe selectors, appropriate fixtures, and
-    comprehensive expect assertions.
+    The healed Production-ready TypeScript Playwright spec file (.ts)
     #IMPORTANT: 
     - Code must be executable without modification. All page.goto() calls should reference a complete absolute URL.
     - Output must be pure, runnable TypeScript code without markdown formatting, code fences, backticks, or
@@ -321,63 +383,8 @@ generate_playwright_tests_task:
     - NO markdown code blocks (no ```language syntax)
     - NO preambles like "Here's the code:" or "This code does..."
     - Start immediately with the actual code
-    - The output must be directly executable/runnable without any modifications
-  agent: test_generator_agent
-  output_file: output/{time_stamp}/simulation.spec.ts
+    - The output must be passed tests directly executable/runnable without any modifications
+  agent: test_healer_agent
+  output_file: output/{time_stamp}/simulation.healed.spec.ts
   # context:
-  #   - take_snapshot_task  
-  #   - generate_test_plan_task
-
-# generate_playwright_tests_task:
-#   description: >
-#     You will:
-#     Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
-#     # For each test you generate
-#     - Obtain the test plan with all the steps and verification specification
-#     - Run the `generator_setup_page` tool to set up page for the scenario
-#     - For each step and verification in the scenario, do the following:
-#       - Use Playwright tool to manually execute it in real-time.
-#       - Use the step description as the intent for each Playwright tool call.
-#     - Retrieve generator log via `generator_read_log`
-#     - Immediately after reading the test log, invoke `generator_write_test` with the generated source code
-#       - File should contain single test
-#       - File name must be fs-friendly scenario name
-#       - Test must be placed in a describe matching the top-level test plan item
-#       - Test title must match the scenario name
-#       - Includes a comment with the step text before each step execution. Do not duplicate comments if step requires
-#         multiple actions.
-#       - Always use best practices from the log when generating tests.
-#   expected_output: >
-#     For following plan:
-
-#     ```markdown file=specs/plan.md
-#     ### 1. Adding New Todos
-#     **Seed:** `tests/seed.spec.ts`
-
-#     #### 1.1 Add Valid Todo
-#     **Steps:**
-#     1. Click in the "What needs to be done?" input field
-
-#     #### 1.2 Add Multiple Todos
-#     ...
-#     ```
-
-#     Following file is generated:
-
-#     ```ts file=add-valid-todo.spec.ts
-#     // spec: specs/plan.md
-#     // seed: tests/seed.spec.ts
-
-#     test.describe('Adding New Todos', () => {
-#       test('Add Valid Todo', async { page } => {
-#         // 1. Click in the "What needs to be done?" input field
-#         await page.click(...);
-
-#         ...
-#       });
-#     });
-#     ```
-#   agent: test_generator_agent
-#   context:
-#     - take_snapshot_task  
-#     - generate_test_plan_task
+  #   - generate_playwright_tests_task
