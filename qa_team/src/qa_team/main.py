@@ -29,6 +29,9 @@ def run():
 
     with open(f"output/simulation.spec.ts", "r", encoding="utf-8") as f:
         test_scripts = f.read()        
+
+    with open(f"e2e/test-files.json", "r", encoding="utf-8") as f:
+        test_files_json = f.read()   
     
     inputs = {
         'given_url': 'http://127.0.0.1:7860/',
@@ -36,6 +39,7 @@ def run():
         'snapshot': snapshot,
         'test_plan': test_plan,
         'test_scripts': test_scripts,
+        'test_files_json': test_files_json,
         'time_stamp': int(time.time())
     }
 

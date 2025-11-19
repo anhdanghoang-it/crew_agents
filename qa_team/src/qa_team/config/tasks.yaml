@@ -1,390 +1,472 @@
-# take_snapshot_task:
-#   description: >
-#     You will:
+take_snapshot_task:
+  description: >
+    You will:
 
-#     1. **Navigate and Explore**
-#       - You are given the userstories: {userstories}
-#       - And the Url of the web application: {given_url}
-#       - Navigate to the provided URL: {given_url} using the browser tools
-#       - Explore the browser snapshot
-#       - Do not take screenshots unless absolutely necessary
-#       - Use browser_* tools to navigate and discover interface
-#       - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
+    1. **Navigate and Explore**
+      - You are given the userstories: {userstories}
+      - And the Url of the web application: {given_url}
+      - Navigate to the provided URL: {given_url} using the browser tools
+      - Explore the browser snapshot
+      - Do not take screenshots unless absolutely necessary
+      - Use browser_* tools to navigate and discover interface
+      - Thoroughly explore the interface, identifying all interactive elements, forms, navigation paths, and functionality
 
-#     2. **Create Documentation**
+    2. **Create Documentation**
 
-#       Save your findings as markdown documentation following this structure:
-#       ### Epic/userstory: epic/userstory name in the userstories
-#       - Page URL: 
-#       - Page Title: 
-#       - Page Snapshot:
-#       ```yaml```
-#       ### Epic/userstory: epic/userstory name in the userstories
-#       - Page URL: 
-#       - Page Title: 
-#       - Page Snapshot:
-#       ```yaml```
-#   expected_output: >
-#     Always save the complete test plan as a markdown file with clear headings and structured sections for each userstory.
-#     following this structure:
-#     ### Epic/userstory: epic/userstory name in the userstories
-#       - Page URL: 
-#       - Page Title: 
-#       - Page Snapshot:
-#       ```yaml```
-#     ### Epic/userstory: epic/userstory name in the userstories
-#     - Page URL: 
-#     - Page Title: 
-#     - Page Snapshot:
-#     ```yaml```
-#     <example>
-#       ### Epic/userstory: epic/userstory name in the userstories
-#       - Page URL: http://127.0.0.1:7860/
-#       - Page Title: Trading Simulation Platform
-#       - Page Snapshot:
-#       ```yaml
-#       - main [ref=e4]:
-#         - generic [ref=e5]:
-#           - generic [ref=e7]:
-#             - heading "Trading Simulation Platform" [level=1] [ref=e12]
-#             - paragraph [ref=e17]: Create an account to start managing your virtual portfolio. Deposit funds, trade stocks, and track your performance.
-#             - generic [ref=e18]:
-#               - generic [ref=e19]:
-#                 - generic [ref=e20]:
-#                   - button [ref=e21] [cursor=pointer]: Portfolio
-#                   - button [ref=e22] [cursor=pointer]: Cash Management
-#                   - button [ref=e23] [cursor=pointer]: Trade
-#                   - button [ref=e24] [cursor=pointer]: History
-#                 - tablist [ref=e25]:
-#                   - tab "Portfolio" [selected] [ref=e26] [cursor=pointer]
-#                   - tab "Cash Management" [ref=e27] [cursor=pointer]
-#                   - tab "Trade" [ref=e28] [cursor=pointer]
-#                   - tab "History" [ref=e29] [cursor=pointer]
-#               - tabpanel [ref=e30]:
-#                 - generic [ref=e31]:
-#                   - generic [ref=e33]:
-#                     - generic [ref=e35]:
-#                       - generic [ref=e36]: Total Portfolio Value ($)
-#                       - textbox "Total Portfolio Value ($)" [disabled] [ref=e38]:
-#                         - /placeholder: ""
-#                         - text: $10,000.00
-#                     - generic [ref=e40]:
-#                       - generic [ref=e41]: Total Profit / Loss ($)
-#                       - textbox "Total Profit / Loss ($)" [disabled] [ref=e43]:
-#                         - /placeholder: ""
-#                         - text: $0.00
-#                     - generic [ref=e45]:
-#                       - generic [ref=e46]: Cash Balance ($)
-#                       - textbox "Cash Balance ($)" [disabled] [ref=e48]:
-#                         - /placeholder: ""
-#                         - text: $10,000.00
-#                   - button "Refresh" [ref=e49] [cursor=pointer]
-#                   - heading "Current Holdings" [level=3] [ref=e54]
-#                   - grid [ref=e57]:
-#                     - table [ref=e58]:
-#                       - rowgroup [ref=e59]:
-#                         - row [ref=e60]:
-#                           - cell [ref=e61]:
-#                             - button [ref=e64] [cursor=pointer]:
-#                               - button [ref=e65]: Symbol
-#                           - cell [ref=e66]:
-#                             - button [ref=e69] [cursor=pointer]:
-#                               - button [ref=e70]: Quantity
-#                           - cell [ref=e71]:
-#                             - button [ref=e74] [cursor=pointer]:
-#                               - button [ref=e75]: Current Price
-#                           - cell [ref=e76]:
-#                             - button [ref=e79] [cursor=pointer]:
-#                               - button [ref=e80]: Total Value
-#                     - button "Drop CSV or TSV files here to import data into dataframe" [ref=e81]:
-#                       - table [ref=e85]:
-#                         - rowgroup [ref=e86]:
-#                           - row "Symbol Quantity Current Price Total Value" [ref=e87]:
-#                             - cell "Symbol" [ref=e88]:
-#                               - button "Symbol" [ref=e91] [cursor=pointer]:
-#                                 - button "Symbol" [ref=e92]
-#                             - cell "Quantity" [ref=e93]:
-#                               - button "Quantity" [ref=e96] [cursor=pointer]:
-#                                 - button "Quantity" [ref=e97]
-#                             - cell "Current Price" [ref=e98]:
-#                               - button "Current Price" [ref=e101] [cursor=pointer]:
-#                                 - button "Current Price" [ref=e102]
-#                             - cell "Total Value" [ref=e103]:
-#                               - button "Total Value" [ref=e106] [cursor=pointer]:
-#                                 - button "Total Value" [ref=e107]
-#                           - iframe [ref=e108]:
+      Save your findings as markdown documentation following this structure:
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
+  expected_output: >
+    Always save the complete test plan as a markdown file with clear headings and structured sections for each userstory.
+    following this structure:
+    ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: 
+      - Page Title: 
+      - Page Snapshot:
+      ```yaml```
+    ### Epic/userstory: epic/userstory name in the userstories
+    - Page URL: 
+    - Page Title: 
+    - Page Snapshot:
+    ```yaml```
+    <example>
+      ### Epic/userstory: epic/userstory name in the userstories
+      - Page URL: http://127.0.0.1:7860/
+      - Page Title: Trading Simulation Platform
+      - Page Snapshot:
+      ```yaml
+      - main [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e7]:
+            - heading "Trading Simulation Platform" [level=1] [ref=e12]
+            - paragraph [ref=e17]: Create an account to start managing your virtual portfolio. Deposit funds, trade stocks, and track your performance.
+            - generic [ref=e18]:
+              - generic [ref=e19]:
+                - generic [ref=e20]:
+                  - button [ref=e21] [cursor=pointer]: Portfolio
+                  - button [ref=e22] [cursor=pointer]: Cash Management
+                  - button [ref=e23] [cursor=pointer]: Trade
+                  - button [ref=e24] [cursor=pointer]: History
+                - tablist [ref=e25]:
+                  - tab "Portfolio" [selected] [ref=e26] [cursor=pointer]
+                  - tab "Cash Management" [ref=e27] [cursor=pointer]
+                  - tab "Trade" [ref=e28] [cursor=pointer]
+                  - tab "History" [ref=e29] [cursor=pointer]
+              - tabpanel [ref=e30]:
+                - generic [ref=e31]:
+                  - generic [ref=e33]:
+                    - generic [ref=e35]:
+                      - generic [ref=e36]: Total Portfolio Value ($)
+                      - textbox "Total Portfolio Value ($)" [disabled] [ref=e38]:
+                        - /placeholder: ""
+                        - text: $10,000.00
+                    - generic [ref=e40]:
+                      - generic [ref=e41]: Total Profit / Loss ($)
+                      - textbox "Total Profit / Loss ($)" [disabled] [ref=e43]:
+                        - /placeholder: ""
+                        - text: $0.00
+                    - generic [ref=e45]:
+                      - generic [ref=e46]: Cash Balance ($)
+                      - textbox "Cash Balance ($)" [disabled] [ref=e48]:
+                        - /placeholder: ""
+                        - text: $10,000.00
+                  - button "Refresh" [ref=e49] [cursor=pointer]
+                  - heading "Current Holdings" [level=3] [ref=e54]
+                  - grid [ref=e57]:
+                    - table [ref=e58]:
+                      - rowgroup [ref=e59]:
+                        - row [ref=e60]:
+                          - cell [ref=e61]:
+                            - button [ref=e64] [cursor=pointer]:
+                              - button [ref=e65]: Symbol
+                          - cell [ref=e66]:
+                            - button [ref=e69] [cursor=pointer]:
+                              - button [ref=e70]: Quantity
+                          - cell [ref=e71]:
+                            - button [ref=e74] [cursor=pointer]:
+                              - button [ref=e75]: Current Price
+                          - cell [ref=e76]:
+                            - button [ref=e79] [cursor=pointer]:
+                              - button [ref=e80]: Total Value
+                    - button "Drop CSV or TSV files here to import data into dataframe" [ref=e81]:
+                      - table [ref=e85]:
+                        - rowgroup [ref=e86]:
+                          - row "Symbol Quantity Current Price Total Value" [ref=e87]:
+                            - cell "Symbol" [ref=e88]:
+                              - button "Symbol" [ref=e91] [cursor=pointer]:
+                                - button "Symbol" [ref=e92]
+                            - cell "Quantity" [ref=e93]:
+                              - button "Quantity" [ref=e96] [cursor=pointer]:
+                                - button "Quantity" [ref=e97]
+                            - cell "Current Price" [ref=e98]:
+                              - button "Current Price" [ref=e101] [cursor=pointer]:
+                                - button "Current Price" [ref=e102]
+                            - cell "Total Value" [ref=e103]:
+                              - button "Total Value" [ref=e106] [cursor=pointer]:
+                                - button "Total Value" [ref=e107]
+                          - iframe [ref=e108]:
                             
-#                         - rowgroup
-#                         - rowgroup
-#           - generic [ref=e109]:
-#             - button "Use via API logo" [ref=e110] [cursor=pointer]:
-#               - text: Use via API
-#               - img "logo" [ref=e111]
-#             - generic [ref=e112]: ·
-#             - link "Built with Gradio logo" [ref=e113] [cursor=pointer]:
-#               - /url: https://gradio.app
-#               - text: Built with Gradio
-#               - img "logo" [ref=e114]
-#             - generic [ref=e115]: ·
-#             - button "Settings Settings" [ref=e116] [cursor=pointer]:
-#               - text: Settings
-#               - img "Settings" [ref=e117]
-#             - iframe [ref=e118]:
-#       ```
-#     </example>
-#   agent: snapshot_agent
-#   output_file: output/{time_stamp}/snapshot.md  
+                        - rowgroup
+                        - rowgroup
+          - generic [ref=e109]:
+            - button "Use via API logo" [ref=e110] [cursor=pointer]:
+              - text: Use via API
+              - img "logo" [ref=e111]
+            - generic [ref=e112]: ·
+            - link "Built with Gradio logo" [ref=e113] [cursor=pointer]:
+              - /url: https://gradio.app
+              - text: Built with Gradio
+              - img "logo" [ref=e114]
+            - generic [ref=e115]: ·
+            - button "Settings Settings" [ref=e116] [cursor=pointer]:
+              - text: Settings
+              - img "Settings" [ref=e117]
+            - iframe [ref=e118]:
+      ```
+    </example>
+  agent: snapshot_agent
+  output_file: output/{time_stamp}/snapshot.md  
 
-# generate_test_plan_task:
-#   description: >
-#     You will:
+generate_test_plan_task:
+  description: >
+    You will:
 
-#     1. **Analyze User Stories**
-#       - You are given the userstories: <userstories>{userstories}</userstories>
-#       - You are given the markdown snapshots from the snapshot task take_snapshot_task: <snapshot>{snapshot}</snapshot>
-#       - Carefully read and analyze each user story and the snapshot related to this user story to understand the requirements, 
-#       acceptance criteria, and the snapshot of the application.
+    1. **Analyze User Stories**
+      - You are given the userstories: <userstories>{userstories}</userstories>
+      - You are given the markdown snapshots from the snapshot task take_snapshot_task: <snapshot>{snapshot}</snapshot>
+      - Carefully read and analyze each user story and the snapshot related to this user story to understand the requirements, 
+      acceptance criteria, and the snapshot of the application.
 
-#     2. **Analyze User Flows**
-#       - Map out the primary user journeys and identify critical paths through the application
-#       - Consider different user types and their typical behaviors
+    2. **Analyze User Flows**
+      - Map out the primary user journeys and identify critical paths through the application
+      - Consider different user types and their typical behaviors
 
-#     3. **Design Comprehensive Scenarios**
+    3. **Design Comprehensive Scenarios**
 
-#       Create detailed test scenarios that cover:
-#       - Happy path scenarios (normal user behavior)
-#       - Edge cases and boundary conditions
-#       - Error handling and validation
+      Create detailed test scenarios that cover:
+      - Happy path scenarios (normal user behavior)
+      - Edge cases and boundary conditions
+      - Error handling and validation
 
-#     4. **Structure Test Plans**
+    4. **Structure Test Plans**
 
-#       Each scenario must include:
-#       - Clear, descriptive title
-#       - Detailed step-by-step instructions
-#       - Expected outcomes where appropriate
-#       - Assumptions about starting state (always assume blank/fresh state)
-#       - Success criteria and failure conditions
+      Each scenario must include:
+      - Clear, descriptive title
+      - Detailed step-by-step instructions
+      - Expected outcomes where appropriate
+      - Assumptions about starting state (always assume blank/fresh state)
+      - Success criteria and failure conditions
 
-#     5. **Create Documentation**
+    5. **Create Documentation**
 
-#       Save your test plan as requested:
-#       - Executive summary of the tested page/application
-#       - Individual scenarios as separate sections
-#       - Each scenario formatted with numbered steps
-#       - Include the seeding steps if needed to reach the initial state
-#       - Clear expected results for verification
+      Save your test plan as requested:
+      - Executive summary of the tested page/application
+      - Individual scenarios as separate sections
+      - Each scenario formatted with numbered steps
+      - Include the seeding steps if needed to reach the initial state
+      - Clear expected results for verification
 
-#     <example-spec>
-#     # Trading Simulation Platform - Comprehensive Test Plan
+    <example-spec>
+    # Trading Simulation Platform - Comprehensive Test Plan
 
-#     ## Application Overview
+    ## Application Overview
 
-#     The Trading Simulation Platform is a Gradio-based web application that provides users with a realistic stock trading simulation environment. The platform enables users to manage virtual trading accounts, execute buy/sell transactions, manage cash balances, and track portfolio performance over time.
+    The Trading Simulation Platform is a Gradio-based web application that provides users with a realistic stock trading simulation environment. The platform enables users to manage virtual trading accounts, execute buy/sell transactions, manage cash balances, and track portfolio performance over time.
 
-#     ### Core Features
-#     - **Account Creation**: Users can create new accounts with initial capital deposits
-#     - **Cash Management**: Deposit and withdraw funds from trading accounts
-#     - **Stock Trading**: Buy and sell shares of stocks (AAPL, TSLA, GOOGL) with real-time pricing
-#     - **Portfolio Tracking**: View current holdings, total portfolio value, and profit/loss calculations
-#     - **Transaction History**: Complete audit trail of all account activities
+    ### Core Features
+    - **Account Creation**: Users can create new accounts with initial capital deposits
+    - **Cash Management**: Deposit and withdraw funds from trading accounts
+    - **Stock Trading**: Buy and sell shares of stocks (AAPL, TSLA, GOOGL) with real-time pricing
+    - **Portfolio Tracking**: View current holdings, total portfolio value, and profit/loss calculations
+    - **Transaction History**: Complete audit trail of all account activities
 
-#     ### Technical Stack
-#     - **Frontend**: Gradio web interface with tabbed navigation
-#     - **Pricing**: External `get_share_price()` API for stock prices
-#     - **Data Storage**: User accounts, transactions, and holdings persistence
+    ### Technical Stack
+    - **Frontend**: Gradio web interface with tabbed navigation
+    - **Pricing**: External `get_share_price()` API for stock prices
+    - **Data Storage**: User accounts, transactions, and holdings persistence
 
-#     ---
+    ---
 
-#     ## Test Environment Setup
+    ## Test Environment Setup
 
-#     **Seed File**: `tests/seed.spec.ts`
+    **Seed File**: `tests/seed.spec.ts`
 
-#     ### Prerequisites
-#     - Application running at `http://127.0.0.1:7860`
-#     - Test account creation:
-#       - Username: `trader123`
-#       - Password: `password123`
-#       - Initial deposit: `$10,000`
+    ### Prerequisites
+    - Application running at `http://127.0.0.1:7860`
+    - Test account creation:
+      - Username: `trader123`
+      - Password: `password123`
+      - Initial deposit: `$10,000`
 
-#     ### Supported Stock Symbols
-#     - AAPL (Apple Inc.)
-#     - TSLA (Tesla Inc.)
-#     - GOOGL (Alphabet Inc.)
+    ### Supported Stock Symbols
+    - AAPL (Apple Inc.)
+    - TSLA (Tesla Inc.)
+    - GOOGL (Alphabet Inc.)
 
-#     ---
+    ---
 
-#     ## Test Scenarios
+    ## Test Scenarios
 
-#     ### Epic 1: Account Management (US-001)
+    ### Epic 1: Account Management (US-001)
 
-#     #### 1.1 Create New Account with Valid Initial Deposit
+    #### 1.1 Create New Account with Valid Initial Deposit
 
-#     **Priority**: Critical  
-#     **User Story**: US-001  
-#     **Seeding steps:** N/A (fresh state)
+    **Priority**: Critical  
+    **User Story**: US-001  
+    **Seeding steps:** N/A (fresh state)
 
-#     **Steps:**
-#     1. Navigate to `http://127.0.0.1:7860`
-#     2. Locate the "Username" textbox
-#     3. Enter username: `trader123`
-#     4. Locate the "Password" textbox (password type)
-#     5. Enter password: `password123`
-#     6. Locate the "Initial Deposit Amount ($)" number input
-#     7. Enter amount: `10000`
-#     8. Click the "Create Account" button
-#     9. Navigate to the "Portfolio" tab
+    **Steps:**
+    1. Navigate to `http://127.0.0.1:7860`
+    2. Locate the "Username" textbox
+    3. Enter username: `trader123`
+    4. Locate the "Password" textbox (password type)
+    5. Enter password: `password123`
+    6. Locate the "Initial Deposit Amount ($)" number input
+    7. Enter amount: `10000`
+    8. Click the "Create Account" button
+    9. Navigate to the "Portfolio" tab
 
-#     **Expected Results:**
-#     - Cash Balance shows: `$10,000.00`
-#     - Total Portfolio Value shows: `$10,000.00`
-#     - Total Profit / Loss shows: `$0.00`
-#     - Current Holdings table is empty (no shares owned)
-#     - Transaction History shows one DEPOSIT entry for $10,000.00
+    **Expected Results:**
+    - Cash Balance shows: `$10,000.00`
+    - Total Portfolio Value shows: `$10,000.00`
+    - Total Profit / Loss shows: `$0.00`
+    - Current Holdings table is empty (no shares owned)
+    - Transaction History shows one DEPOSIT entry for $10,000.00
 
-#     ---
+    ---
 
-#     ### Epic 2: Cash Management (US-002)
+    ### Epic 2: Cash Management (US-002)
 
-#     #### 2.1 Successful Deposit and Balance Update
+    #### 2.1 Successful Deposit and Balance Update
 
-#     **Priority**: High
-#     **User Story**: US-002 (AC-1)
-#     **Seeding steps:** Account `traderQA` exists with Cash Balance $10,000.00.
-#     1. Navigate to `http://127.0.0.1:7860`
-#     2. Locate the "Username" textbox
-#     3. Enter username: `traderQA`
-#     4. Locate the "Password" textbox (password type)
-#     5. Enter password: `password123`
-#     6. Locate the "Initial Deposit Amount ($)" number input
-#     7. Enter amount: `10000`
-#     8. Click the "Create Account" button
+    **Priority**: High
+    **User Story**: US-002 (AC-1)
+    **Seeding steps:** Account `traderQA` exists with Cash Balance $10,000.00.
+    1. Navigate to `http://127.0.0.1:7860`
+    2. Locate the "Username" textbox
+    3. Enter username: `traderQA`
+    4. Locate the "Password" textbox (password type)
+    5. Enter password: `password123`
+    6. Locate the "Initial Deposit Amount ($)" number input
+    7. Enter amount: `10000`
+    8. Click the "Create Account" button
 
-#     **Steps:**
-#     1. Navigate to the "Cash Management" tab (ref: e62).
-#     2. Verify Current Cash Balance (ref: e151) is `$10,000.00`.
-#     3. Enter amount to deposit: `2000.00` in the Amount ($) input (ref: e158).
-#     4. Click the "Deposit" button (ref: e160).
-#     5. Navigate to the "History" tab (ref: e64).
+    **Steps:**
+    1. Navigate to the "Cash Management" tab (ref: e62).
+    2. Verify Current Cash Balance (ref: e151) is `$10,000.00`.
+    3. Enter amount to deposit: `2000.00` in the Amount ($) input (ref: e158).
+    4. Click the "Deposit" button (ref: e160).
+    5. Navigate to the "History" tab (ref: e64).
 
-#     **Expected Results:**
-#     - **Step 4 Status**: Status textbox (ref: e167) displays: "Success: $2,000.00 deposited. Your new cash balance is $12,000.00."
-#     - Current Cash Balance (ref: e151) updates to `$12,000.00`.
-#     - **Step 5 History**: A new 'DEPOSIT' transaction for $2,000.00 is recorded.
-#     </example-spec>
+    **Expected Results:**
+    - **Step 4 Status**: Status textbox (ref: e167) displays: "Success: $2,000.00 deposited. Your new cash balance is $12,000.00."
+    - Current Cash Balance (ref: e151) updates to `$12,000.00`.
+    - **Step 5 History**: A new 'DEPOSIT' transaction for $2,000.00 is recorded.
+    </example-spec>
 
-#     **Quality Standards**:
-#     - Write steps that are specific enough for any tester to follow
-#     - Include negative testing scenarios
-#     - Ensure scenarios are independent and can be run in any order
+    **Quality Standards**:
+    - Write steps that are specific enough for any tester to follow
+    - Include negative testing scenarios
+    - Ensure scenarios are independent and can be run in any order
 
-#     **Output Format**: Always save the complete test plan as a markdown file with clear headings, numbered steps, and
-#     professional formatting suitable for sharing with development and QA teams.
-#   expected_output: >
-#     Always save the complete test plan as a markdown file with clear headings, numbered steps, 
-#     and professional formatting suitable for sharing with development and QA teams.
-#   agent: test_plan_agent
-#   output_file: output/{time_stamp}/test_plan.md
-  # context:
-  #   - take_snapshot_task
+    **Output Format**: Always save the complete test plan as a markdown file with clear headings, numbered steps, and
+    professional formatting suitable for sharing with development and QA teams.
+  expected_output: >
+    Always save the complete test plan as a markdown file with clear headings, numbered steps, 
+    and professional formatting suitable for sharing with development and QA teams.
+  agent: test_plan_agent
+  output_file: output/{time_stamp}/test_plan.md
+  context:
+    - take_snapshot_task
 
-# generate_playwright_tests_task:
-#   description: >
-#     You will:
-#     # For each scenario in the test plan, do the following:
-#     Here is the test plan from generate_test_plan_task: <test_plan>{test_plan}</test_plan>
-#     Here is the snapshots from take_snapshot_task: <snapshots>{snapshot}</snapshots>
-#     - Obtain the test plan with all the steps and verification specification from the generate_test_plan_task
-#     - Generate executable Playwright test scripts in TypeScript using test plan from generate_test_plan_task
-#     and snapshots from take_snapshot_task.
-#     - Utilize snapshots for reliability.
-#     - Implement Playwright best practices including describe/it blocks, proper fixtures,
-#     page object patterns where applicable, and robust expect assertions.
-#     - Ensure each locator uniquely identifies a single element.
-#     - When multiple matches are possible (e.g., 'Password' and 'Confirm Password'),
-#     disambiguate using structured selectors from snapshots (like data-testid or aria-label).
-#     - When verifying UI text that may contain dynamic data, prefer toContainText() or
-#     regex-based matching instead of exact toHaveText() equality.
-#     - Always include the {given_url} as the base URL when navigating pages.
-#     - Never use relative URLs (e.g. "/") directly in page.goto().
-#     - Ensure every navigation command uses a full absolute URL derived from {given_url}.
-#     - Validate that page.goto() is syntactically correct and executable.
-#   expected_output: >
-#     Production-ready TypeScript Playwright spec file (.ts) containing properly structured
-#     test suites with describe/it blocks, type-safe selectors, appropriate fixtures, and
-#     comprehensive expect assertions.
-#     #IMPORTANT: 
-#     - Code must be executable without modification. All page.goto() calls should reference a complete absolute URL.
-#     - Output must be pure, runnable TypeScript code without markdown formatting, code fences, backticks, or
-#     explanatory text.
-#     - Generate ONLY executable code, nothing else
-#     - NO explanations, comments, or descriptions before or after the code
-#     - NO markdown code blocks (no ```language syntax)
-#     - NO preambles like "Here's the code:" or "This code does..."
-#     - Start immediately with the actual code
-#     - The output must be directly executable/runnable without any modifications
-#   agent: test_generator_agent
-#   output_file: output/{time_stamp}/simulation.spec.ts
-  # context:
-  #   - take_snapshot_task  
-  #   - generate_test_plan_task
+generate_playwright_tests_task:
+  description: >
+    Generate isolated Playwright test files in JSON format.
+    
+    INPUTS:
+    - Test plan: {test_plan}
+    - Snapshots: {snapshot}
+    - Base URL: {given_url}
+    
+    PROCESS:
+    1. Parse the test plan to identify ALL test scenarios
+    2. For EACH scenario, create a separate .spec.ts file
+    3. Use kebab-case filenames (e.g., "successful-account-creation.spec.ts")
+    4. Generate executable Playwright TypeScript code
+    5. Output as a JSON array
+    
+    TEST CODE REQUIREMENTS:
+    - Use accessibility snapshots for accurate selectors
+    - Follow Playwright best practices (describe/test blocks, proper assertions)
+    - Ensure locators uniquely identify elements
+    - Use complete absolute URLs from {given_url}
+    - Make each test isolated and independently runnable
+    - Handle dynamic content with toContainText() or regex when appropriate
+    
+    FILENAME REQUIREMENTS:
+    - kebab-case only
+    - Descriptive of test scenario
+    - Must end with .spec.ts
+    - Examples: "deposit-funds-successful.spec.ts", "trade-invalid-symbol.spec.ts"
+  expected_output: >
+    PURE JSON ARRAY ONLY - NO OTHER TEXT OR FORMATTING.
+    
+    Format:
+    [
+      {{
+        "filename": "test-scenario-name.spec.ts",
+        "content": "import {{ test, expect }} from '@playwright/test';\n\ntest.describe('Description', () => {{\n  test('scenario name', async ({{ page }}) => {{\n    await page.goto('{given_url}');\n    // test steps\n  }});\n}});"
+      }}
+    ]
+    
+    OUTPUT CONSTRAINTS:
+    ✅ START: Output begins with [
+    ✅ END: Output ends with ]
+    ✅ CONTENT: Valid JSON only
+    ✅ ESCAPE: Properly escape quotes (\" ), newlines (\n), backslashes (\\)
+    ✅ EXECUTABLE: Each "content" field contains runnable TypeScript
+    
+    FORBIDDEN:
+    ❌ NO ```json or ``` code fences
+    ❌ NO markdown formatting
+    ❌ NO explanatory text
+    ❌ NO "Here is the output:" or similar preambles
+    ❌ NO relative URLs (use {given_url})
+    ❌ NO comments outside of test code
+    
+    This output will be directly parsed as JSON - any non-JSON content will cause failure.
+  agent: test_generator_agent
+  output_file: e2e/test-files.json
+  context:
+    - take_snapshot_task  
+    - generate_test_plan_task
 
 heal_playwright_tests_task:
   description: >
-    Your job is to heal and fix this test: 
-    <test_case_to_check>
-    ```
-    const BASE_URL = 'http://127.0.0.1:7860/';
-    test('1.3 Attempt to Create Account with Invalid Initial Deposit', async ({ page }) => {
-        await page.goto(BASE_URL);
-
-        // Attempt with negative value
-        await page.getByLabel('Username').fill('invalidTrader');
-        await page.getByLabel('Password').fill('password123');
-        await page.getByLabel('Initial Deposit Amount ($)').fill('-100');
-        await page.getByRole('button', { name: 'Create Account' }).click();
-        await expect(page.getByLabel('Status').first()).toHaveValue("Error: Initial deposit must be a positive number.");
-
-        // Attempt with zero
-        await page.getByLabel('Initial Deposit Amount ($)').fill('0');
-        await page.getByRole('button', { name: 'Create Account' }).click();
-        await expect(page.getByLabel('Status').first()).toHaveValue("Error: Initial deposit must be a positive number.");
-    });```
-    </test_case_to_check>
-    Your workflow:
-    1. **Initial Execution**: Run the provided test to observe failures.
-    2. **Error Investigation**: When the test pauses on errors, use available Playwright MCP tools to:
-      - Examine the error details
-      - Capture page snapshot to understand the context
-      - Analyze selectors, timing issues, or assertion failures
-      - The expected output may sometimes contain dynamic data, use regex to match the dynamic parts
-      - The expected output may sometimes show in toast notifications or modal dialogs, make sure to capture those UI elements in your investigation
-    3. **Root Cause Analysis**: Determine the underlying cause of the failure by examining:
-      - Element selectors that may have changed
-      - Timing and synchronization issues
-      - Data dependencies or test environment problems
-      - Application changes that broke test assumptions
-      - The expected output may sometimes contain dynamic data, use regex to match the dynamic parts
-      - The expected output may sometimes show in toast notifications or modal dialogs, make sure to capture those UI elements in your investigation
-    4. **Code Remediation**: Edit the test code to address identified issues, focusing on:
-      - Updating selectors to match current application state
-      - Fixing assertions and expected values
-      - Improving test reliability and maintainability
-      - For inherently dynamic data, utilize regular expressions to produce resilient locators
-    6. **Verification**: Restart the test after each fix to validate the changes
-    7. **Iteration**: Repeat the investigation and fixing process until the test passes cleanly
+    Process JSON array of test files, run each test, heal failures, and output healed JSON.
+    
+    INPUTS:
+    - JSON test files from generate_playwright_tests_task: {test_files_json}
+    - Application URL: {given_url}
+    
+    PROCESS:
+    
+    STEP 1: PARSE INPUT
+    - Read the JSON from {test_files_json} file
+    - Parse the array of test file objects
+    - Each object has: {{"filename": "test.spec.ts", "content": "test code..."}}
+    
+    STEP 2: FOR EACH TEST FILE
+    
+    A. SETUP
+       - The test files are in e2e/filename
+       - Prepare for test execution
+    
+    B. RUN TEST
+       - Use playwright-test/test_list to list tests in the file
+       - Use playwright-test/test_run to execute: npx playwright test e2e/filename
+       - Capture test results (pass/fail)
+    
+    C. IF TEST PASSES ✅
+       - Keep original "content" in JSON
+       - Log: "✅ PASSED: filename"
+       - Move to next test
+    
+    D. IF TEST FAILS ❌
+       - Enter HEALING MODE:
+       
+       1. DIAGNOSE:
+          - Use playwright-test/test_debug to run in debug mode
+          - Examine error message and stack trace
+          - Identify failure type:
+            • Selector not found → element changed or missing
+            • Timeout → element not appearing, wrong wait
+            • Assertion failed → expected value wrong or dynamic
+            • Other errors → logic or implementation issue
+       
+       2. INVESTIGATE:
+          - Use browser snapshot tools to see current page state
+          - Use generate_locator to find correct selectors
+          - Compare expected vs actual behavior
+          - Check for dynamic content, timing issues
+       
+       3. FIX:
+          - Update selectors in the "content" string
+          - Add waits: await page.waitForSelector(), waitForLoadState()
+          - Fix assertions: use toContainText() for dynamic data
+          - Use regex for flexible matching: expect().toMatch(/pattern/)
+          - Improve test reliability
+       
+       4. VALIDATE:
+          - Write fixed content to file
+          - Re-run the test
+          - If passes → update JSON with healed "content" ✅
+          - If fails → repeat diagnose-fix cycle (max 3 attempts)
+          - If still fails after 3 attempts → keep best attempt
+       
+       5. UPDATE JSON:
+          - Replace the "content" field with healed code
+          - Preserve the "filename" field
+          - Log: "🔧 HEALED: filename (X attempts)"
+    
+    E. TRACK PROGRESS
+       - Count: total tests, passed initially, healed successfully, still failing
+       - Log progress for each test
+    
+    STEP 3: OUTPUT HEALED JSON
+    - Construct JSON array with same structure as input
+    - Include healed "content" for fixed tests
+    - Include original "content" for passing tests
+    - Output PURE JSON only (no markdown, no reports)
+    
+    HEALING BEST PRACTICES:
+    - Make minimal, surgical changes to test code
+    - Preserve test intent and coverage
+    - Use Playwright best practices
+    - Add comments in code explaining non-obvious fixes
+    - Ensure all URLs are absolute
+    - Use stable selectors (getByRole, getByLabel preferred over CSS)
+    - Add explicit waits for reliability
   expected_output: >
-    The healed Production-ready TypeScript Playwright spec file (.ts)
-    #IMPORTANT: 
-    - Code must be executable without modification. All page.goto() calls should reference a complete absolute URL.
-    - Output must be pure, runnable TypeScript code without markdown formatting, code fences, backticks, or
-    explanatory text.
-    - Generate ONLY executable code, nothing else
-    - NO explanations, comments, or descriptions before or after the code
-    - NO markdown code blocks (no ```language syntax)
-    - NO preambles like "Here's the code:" or "This code does..."
-    - Start immediately with the actual code
-    - The output must be passed tests directly executable/runnable without any modifications
+    PURE JSON ARRAY ONLY - NO OTHER TEXT OR FORMATTING.
+    
+    Same structure as input with healed test content:
+    [
+      {{
+        "filename": "test1.spec.ts",
+        "content": "import {{ test, expect }} from '@playwright/test';\n\n// Healed: Added waitForLoadState\ntest.describe('Test', () => {{\n  test('scenario', async ({{ page }}) => {{\n    await page.goto('{given_url}');\n    await page.waitForLoadState('networkidle');\n    await expect(page.getByLabel('Status')).toContainText('Success');\n  }});\n}});"
+      }},
+      {{
+        "filename": "test2.spec.ts",
+        "content": "import {{ test, expect }} from '@playwright/test';\n\ntest('another', async ({{ page }}) => {{\n  // Original passing test - no changes\n  await page.goto('{given_url}');\n}});"
+      }}
+    ]
+    
+    OUTPUT CONSTRAINTS:
+    ✅ START: Output begins with [
+    ✅ END: Output ends with ]
+    ✅ CONTENT: Valid JSON only
+    ✅ STRUCTURE: Exact same as input (filename + content)
+    ✅ ESCAPE: Properly escape quotes (\"), newlines (\n), backslashes (\\)
+    ✅ EXECUTABLE: Each "content" field contains runnable TypeScript
+    
+    FORBIDDEN:
+    ❌ NO ```json or ``` code fences
+    ❌ NO markdown formatting
+    ❌ NO healing report in JSON output
+    ❌ NO explanatory text outside the JSON
+    ❌ NO "Here is the healed output:" preambles
+    ❌ NO summary or statistics in the JSON output
+    
+    NOTE: A separate healing report will be auto-generated from logs.
+    Your JSON output will be parsed and written to files using the callback.
   agent: test_healer_agent
-  output_file: output/{time_stamp}/simulation.healed.spec.ts
-  # context:
-  #   - generate_playwright_tests_task
+  output_file: e2e/healed-test-files.json
